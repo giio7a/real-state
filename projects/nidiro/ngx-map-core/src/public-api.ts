@@ -2,5 +2,5 @@
  * Public API Surface of ngx-map-core
  */
 
-export * from './lib/ngx-map-core.service';
-export * from './lib/ngx-map-core.component';
+export {NgxOpenLayersCoreModule} from './lib/ngx-open-layers-core/ngx-open-layers-core.module'
+export {NgxOpenLayersCoreComponent} from './lib/ngx-open-layers-core/ngx-open-layers-core.component'

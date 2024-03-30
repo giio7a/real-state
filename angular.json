@@ -78,6 +78,7 @@
               "projects/siena/src/assets"
             ],
             "styles": [
+              "node_modules/ol/ol.css",
               "projects/siena/src/styles.scss"
             ],
             "scripts": []
