@@ -1,11 +1,11 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Map, View} from 'ol';
 import {fromLonLat} from 'ol/proj';
-import {INgxMapCore, NgxMapCoreCommon} from '../ngx-map-core.interface';
+import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
 import {ViewOptions} from 'ol/View';
 
 @Component({
-  selector: 'nid-ngx-open-layers-core',
+  selector: 'nid-open-layers-core',
   standalone: true,
   imports: [],
   templateUrl: './ngx-open-layers-core.component.html',
@@ -18,6 +18,7 @@ export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements
 
   constructor() {
     super()
+    console.log('\x1B[46;30m ', 2222);
   }
 
   override ngOnInit() {
