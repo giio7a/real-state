@@ -1,14 +1,16 @@
 import {Directive, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {INgxMapCore} from './ngx-map-core';
 
 @Directive()
-export abstract class NgxMapLayer implements OnChanges, OnDestroy {
+export abstract class NgxMapLayer<MapImplementation> implements OnChanges, OnDestroy {
+  @Input() ngxMapCore!: INgxMapCore<MapImplementation>; // Mandatory!
   @Input() visible = true;
 
   abstract getLayerId(): string;
 
   protected abstract setLayerVisibility(isVisible: boolean): void;
 
-  protected abstract removeLayer(): void;
+  protected abstract removeSelfLayer(): void;
 
   constructor() {
   }
@@ -26,6 +28,6 @@ export abstract class NgxMapLayer implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.removeLayer();
+    this.removeSelfLayer();
   }
 }

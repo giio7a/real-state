@@ -11,6 +11,8 @@ export interface INgxMapCore<MapImplementation> {
   mapCore: MapImplementation;
 
   initMap(): void;
+
+  insertLayer(...args: unknown[]): unknown; // Not typed to allow the implementation decide its arguments.
 }
 
 @Directive()
@@ -20,6 +22,8 @@ export abstract class NgxMapCoreCommon<MapImplementation> implements INgxMapCore
   mapCore!: MapImplementation; // Marking as ! because the implementations must define it on ngOnInit
 
   abstract initMap(): void;
+
+  abstract insertLayer(...args: unknown[]): unknown;
 
   readonly defaultInitialPosition: NgxMapCoreCommon<MapImplementation>['initialPosition'] = {
     longitude: 0,

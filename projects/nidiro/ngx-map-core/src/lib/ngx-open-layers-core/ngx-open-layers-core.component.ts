@@ -3,6 +3,7 @@ import {Map, View} from 'ol';
 import {fromLonLat} from 'ol/proj';
 import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
 import {ViewOptions} from 'ol/View';
+import {Layer} from 'ol/layer';
 
 @Component({
   selector: 'nid-open-layers-core',
@@ -18,7 +19,7 @@ export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements
 
   constructor() {
     super()
-    console.log('\x1B[46;30m ', 2222);
+    console.log('\x1B[46;30m Core');
   }
 
   override ngOnInit() {
@@ -37,6 +38,10 @@ export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements
       target: this.olMapElement.nativeElement,
       view: new View(viewOptions)
     })
+  }
+
+  override insertLayer(layer: Layer) {
+    this.mapCore.addLayer(layer)
   }
 }
 

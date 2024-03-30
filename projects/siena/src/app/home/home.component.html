@@ -1,5 +1,7 @@
 <div style="height: 400px; width: 100%; border: 1px solid darkcyan">
-  <nid-open-layers-core>
-    <ng-container nidOpenLayersWeatherLayer></ng-container>
+  <nid-open-layers-core #olMapCore>
+    <ng-container nidOpenLayersWeatherLayer [ngxMapCore]="olMapCore"></ng-container>
   </nid-open-layers-core>
 </div>
+
+<!--TODO: IJ Issue https://youtrack.jetbrains.com/issue/WEB-61907 -->

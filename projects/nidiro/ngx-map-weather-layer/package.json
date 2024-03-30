@@ -4,7 +4,10 @@
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0",
-    "@nidiro/ngx-map-core": "1.0.0"
+    "@deck.gl/core": "^8.9.34",
+    "@nidiro/ngx-map-core": "1.0.0",
+    "ol": "^9.1.0",
+    "weatherlayers-gl": "^2024.3.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"
