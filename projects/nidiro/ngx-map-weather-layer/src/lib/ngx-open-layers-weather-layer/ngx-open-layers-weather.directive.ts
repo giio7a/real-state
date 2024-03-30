@@ -8,6 +8,7 @@ import {GeoJsonLayer, ArcLayer} from '@deck.gl/layers/typed';
 
 @Directive({
   selector: '[nidOpenLayersWeatherLayer]',
+  standalone: true,
 })
 export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements OnInit {
 
