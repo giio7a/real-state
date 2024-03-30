@@ -1,5 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Map, View} from 'ol';
+import {fromLonLat} from 'ol/proj';
+import {INgxMapCore, NgxMapCoreCommon} from '../ngx-map-core.interface';
+import {ViewOptions} from 'ol/View';
 
 @Component({
   selector: 'nid-ngx-open-layers-core',
@@ -8,27 +11,35 @@ import {Map, View} from 'ol';
   templateUrl: './ngx-open-layers-core.component.html',
   styleUrl: './ngx-open-layers-core.component.scss'
 })
-export class NgxOpenLayersCoreComponent implements OnInit {
-
-  mapCore: any | undefined; // TODO Enrique: Implement type
+export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements INgxMapCore<Map>, OnInit {
   cursorInMap: boolean = false;
 
   @ViewChild('olMap', {static: true}) olMapElement!: ElementRef<HTMLDivElement>;
 
   constructor() {
+    super()
   }
 
-  ngOnInit() {
-    this.initMap();
+  override ngOnInit() {
+    super.ngOnInit();
   }
 
-  private initMap() {
+  override initMap() {
+    const initialPosition = this.initialPosition || this.defaultInitialPosition!;
+    const viewOptions: ViewOptions = {
+      center: fromLonLat([initialPosition?.longitude, initialPosition?.latitude]),
+      zoom: getValidLowerZoomLevelFrom(initialPosition.zoom),
+      minZoom: MIN_OL_ZOOM,
+      enableRotation: false, // Important! Our performance improvements need to be reviewed before allowing map rotation.
+    };
     this.mapCore = new Map({
       target: this.olMapElement.nativeElement,
-      view: new View({
-        center: [0, 0],
-        zoom: 10,
-      })
+      view: new View(viewOptions)
     })
   }
 }
+
+const MIN_OL_ZOOM = 3;
+const getValidLowerZoomLevelFrom = (zoomLevel: number): number => {
+  return zoomLevel < MIN_OL_ZOOM ? MIN_OL_ZOOM : zoomLevel;
+};
