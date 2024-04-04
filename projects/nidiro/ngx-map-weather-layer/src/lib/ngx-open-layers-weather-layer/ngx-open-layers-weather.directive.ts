@@ -10,7 +10,7 @@ import * as WeatherLayers from 'weatherlayers-gl';
 import {UnitSystem} from 'weatherlayers-gl';
 import * as WeatherLayersClient from 'weatherlayers-gl/client';
 // import {WEATHER_LAYERS_ACCESS_TOKEN} from '../auth.js';
-import {initConfig, initGui, isMetalWebGl2, NO_DATA} from './config';
+import {cssToColor, initConfig, initGui, isMetalWebGl2, NO_DATA} from './config';
 import {BASEMAP_RASTER_STYLE_URL} from './basemap';
 import {XYZ} from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
@@ -104,7 +104,7 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
   }
 
   private async initLayer2() {
-    const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), 0, 24);
+    const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), -24, 24);
     const client = new WeatherLayersClient.Client({
       accessToken: 'aECrzm2nNuVH1VsGjUk1', // TODO Enrique: Store
     });
@@ -247,133 +247,132 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
       (config as any).datetimes = datetimes;
       config.datetime = datetime;
 
+      const raster = new WeatherLayers.RasterLayer({
+        id: 'raster',
+        // data properties
+        image,
+        image2,
+        imageSmoothing: config.imageSmoothing,
+        imageInterpolation: config.imageInterpolation,
+        imageWeight,
+        imageType: imageType as any,
+        imageUnscale,
+        imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
+        imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
+        bounds,
+        // style properties
+        visible: config.raster.enabled,
+        palette,
+        opacity: config.raster.opacity,
+        pickable: !isMetalWebGl2(),
+        extensions: [new ClipExtension()],
+        clipBounds: [-181, -85.051129, 181, 85.051129],
+      });
+      const contour = new WeatherLayers.ContourLayer({
+        id: 'contour',
+        // data properties
+        image,
+        image2,
+        imageSmoothing: config.imageSmoothing,
+        imageInterpolation: config.imageInterpolation,
+        imageWeight,
+        imageType: imageType as any,
+        imageUnscale,
+        imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
+        imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
+        bounds,
+        // style properties
+        visible: config.contour.enabled,
+        interval: config.contour.interval,
+        majorInterval: config.contour.majorInterval,
+        width: config.contour.width,
+        color: cssToColor(config.contour.color) as any,
+        palette: config.contour.palette ? palette : null,
+        opacity: config.contour.opacity,
+        extensions: [new ClipExtension()],
+        clipBounds: [-181, -85.051129, 181, 85.051129],
+      })
+      const highLow = new WeatherLayers.HighLowLayer({
+        id: 'highLow',
+        // data properties
+        image,
+        image2,
+        imageSmoothing: config.imageSmoothing,
+        imageInterpolation: config.imageInterpolation,
+        imageWeight,
+        imageType: imageType as any,
+        imageUnscale,
+        imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
+        imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
+        bounds,
+        // style properties
+        visible: config.highLow.enabled, // && !timelineControl.running,
+        unitFormat: unitFormat as any,
+        radius: config.highLow.radius,
+        textSize: config.highLow.textSize,
+        textColor: cssToColor(config.highLow.textColor) as any,
+        textOutlineColor: cssToColor(config.highLow.textOutlineColor) as any,
+        palette: config.highLow.palette ? palette : null,
+        textOutlineWidth: config.highLow.textOutlineWidth,
+        opacity: config.highLow.opacity,
+      });
+      const grid = new WeatherLayers.GridLayer({
+        id: 'grid',
+        // data properties
+        image,
+        image2,
+        imageSmoothing: config.imageSmoothing,
+        imageInterpolation: config.imageInterpolation,
+        imageWeight,
+        imageType: imageType as any,
+        imageUnscale,
+        imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
+        imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
+        bounds,
+        // style properties
+        visible: config.grid?.enabled,
+        style: config.grid?.style,
+        density: config.grid?.density,
+        unitFormat: unitFormat as any,
+        textSize: config.grid?.textSize,
+        textColor: cssToColor(config.grid?.textColor) as any,
+        textOutlineWidth: config.grid?.textOutlineWidth,
+        textOutlineColor: cssToColor(config.grid?.textOutlineColor) as any,
+        iconBounds: config.grid?.iconBounds,
+        iconSize: config.grid?.style === WeatherLayers.GridStyle.ARROW ? [config.grid.iconSize / 8, config.grid.iconSize] : config.grid?.iconSize,
+        iconColor: cssToColor(config.grid?.iconColor) as any,
+        palette: config.grid?.palette ? palette : null,
+        opacity: config.grid?.opacity,
+      })
+      const particle = new WeatherLayers.ParticleLayer({
+        id: 'particle',
+        // data properties
+        image,
+        image2,
+        imageSmoothing: config.imageSmoothing,
+        imageInterpolation: config.imageInterpolation,
+        imageWeight,
+        imageType: imageType as any,
+        imageUnscale,
+        imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
+        imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
+        bounds,
+        // style properties
+        visible: config.particle?.enabled,
+        numParticles: config.particle?.numParticles,
+        maxAge: config.particle?.maxAge,
+        speedFactor: config.particle?.speedFactor,
+        width: config.particle?.width,
+        color: cssToColor(config.particle?.color) as any,
+        palette: config.particle?.palette ? palette : null,
+        opacity: config.particle?.opacity,
+        animate: config.particle?.animate,
+        extensions: [new ClipExtension()],
+        clipBounds: [-181, -85.051129, 181, 85.051129],
+        getPolygonOffset: () => [0, -1000],
+      })
       deckgl.setProps({
-        layers: [
-          new WeatherLayers.RasterLayer({
-            id: 'raster',
-            // data properties
-            image,
-            image2,
-            imageSmoothing: config.imageSmoothing,
-            imageInterpolation: config.imageInterpolation,
-            imageWeight,
-            // imageType: imageType,
-            imageUnscale,
-            imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-            imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
-            bounds,
-            // style properties
-            visible: config.raster.enabled,
-            palette,
-            opacity: config.raster.opacity,
-            pickable: !isMetalWebGl2(),
-            extensions: [new ClipExtension()],
-            clipBounds: [-181, -85.051129, 181, 85.051129],
-          }),
-          // new WeatherLayers.ContourLayer({
-          //   id: 'contour',
-          //   // data properties
-          //   image,
-          //   image2,
-          //   imageSmoothing: config.imageSmoothing,
-          //   imageInterpolation: config.imageInterpolation,
-          //   imageWeight,
-          //   imageType,
-          //   imageUnscale,
-          //   imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-          //   imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
-          //   bounds,
-          //   // style properties
-          //   visible: config.contour.enabled,
-          //   interval: config.contour.interval,
-          //   majorInterval: config.contour.majorInterval,
-          //   width: config.contour.width,
-          //   color: cssToColor(config.contour.color),
-          //   palette: config.contour.palette ? palette : null,
-          //   opacity: config.contour.opacity,
-          //   extensions: [new deck.ClipExtension()],
-          //   clipBounds: [-181, -85.051129, 181, 85.051129],
-          // }),
-          // new WeatherLayers.HighLowLayer({
-          //   id: 'highLow',
-          //   // data properties
-          //   image,
-          //   image2,
-          //   imageSmoothing: config.imageSmoothing,
-          //   imageInterpolation: config.imageInterpolation,
-          //   imageWeight,
-          //   imageType,
-          //   imageUnscale,
-          //   imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-          //   imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
-          //   bounds,
-          //   // style properties
-          //   visible: config.highLow.enabled // && !timelineControl.running,
-          //   unitFormat,
-          //   radius: config.highLow.radius,
-          //   textSize: config.highLow.textSize,
-          //   textColor: cssToColor(config.highLow.textColor),
-          //   textOutlineColor: cssToColor(config.highLow.textOutlineColor),
-          //   palette: config.highLow.palette ? palette : null,
-          //   textOutlineWidth: config.highLow.textOutlineWidth,
-          //   opacity: config.highLow.opacity,
-          // }),
-          // new WeatherLayers.GridLayer({
-          //   id: 'grid',
-          //   // data properties
-          //   image,
-          //   image2,
-          //   imageSmoothing: config.imageSmoothing,
-          //   imageInterpolation: config.imageInterpolation,
-          //   imageWeight,
-          //   imageType,
-          //   imageUnscale,
-          //   imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-          //   imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
-          //   bounds,
-          //   // style properties
-          //   visible: config.grid.enabled,
-          //   style: config.grid.style,
-          //   density: config.grid.density,
-          //   unitFormat,
-          //   textSize: config.grid.textSize,
-          //   textColor: cssToColor(config.grid.textColor),
-          //   textOutlineWidth: config.grid.textOutlineWidth,
-          //   textOutlineColor: cssToColor(config.grid.textOutlineColor),
-          //   iconBounds: config.grid.iconBounds,
-          //   iconSize: config.grid.style === WeatherLayers.GridStyle.ARROW ? [config.grid.iconSize / 8, config.grid.iconSize] : config.grid.iconSize,
-          //   iconColor: cssToColor(config.grid.iconColor),
-          //   palette: config.grid.palette ? palette : null,
-          //   opacity: config.grid.opacity,
-          // }),
-          // new WeatherLayers.ParticleLayer({
-          //   id: 'particle',
-          //   // data properties
-          //   image,
-          //   image2,
-          //   imageSmoothing: config.imageSmoothing,
-          //   imageInterpolation: config.imageInterpolation,
-          //   imageWeight,
-          //   imageType,
-          //   imageUnscale,
-          //   imageMinValue: config.imageMinValue > 0 ? config.imageMinValue : null,
-          //   imageMaxValue: config.imageMaxValue > 0 ? config.imageMaxValue : null,
-          //   bounds,
-          //   // style properties
-          //   visible: config.particle.enabled,
-          //   numParticles: config.particle.numParticles,
-          //   maxAge: config.particle.maxAge,
-          //   speedFactor: config.particle.speedFactor,
-          //   width: config.particle.width,
-          //   color: cssToColor(config.particle.color),
-          //   palette: config.particle.palette ? palette : null,
-          //   opacity: config.particle.opacity,
-          //   animate: config.particle.animate,
-          //   extensions: [new deck.ClipExtension()],
-          //   clipBounds: [-181, -85.051129, 181, 85.051129],
-          //   getPolygonOffset: () => [0, -1000],
-          // }),
-        ],
+        layers: [raster, contour, highLow, grid, particle],
       });
 
       // legendControl.updateConfig({title, unitFormat, palette});
