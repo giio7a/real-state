@@ -4,12 +4,10 @@ import {Layer} from 'ol/layer';
 import {toLonLat} from 'ol/proj';
 import {Map} from 'ol'
 import {Deck, MapView} from '@deck.gl/core/typed';
-import {ArcLayer, GeoJsonLayer} from '@deck.gl/layers/typed';
 import {ClipExtension} from '@deck.gl/extensions/typed';
 import * as WeatherLayers from 'weatherlayers-gl';
 import {UnitSystem} from 'weatherlayers-gl';
 import * as WeatherLayersClient from 'weatherlayers-gl/client';
-// import {WEATHER_LAYERS_ACCESS_TOKEN} from '../auth.js';
 import {cssToColor, initConfig, initGui, isMetalWebGl2, NO_DATA} from './config';
 import {BASEMAP_RASTER_STYLE_URL} from './basemap';
 import {XYZ} from 'ol/source';
@@ -40,70 +38,10 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
   }
 
   ngOnInit() {
-    this.initLayer()
-    this.initLayer2();
+    this.initLayer();
   }
 
-  // TODO Enrique: Dummy airports DeckGL layer
-  private initLayer() {
-    const AIR_PORTS =
-      'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
-
-    const deck = new Deck({
-      initialViewState: {longitude: 0, latitude: 0, zoom: 1},
-      controller: false,
-      parent: this.ngxMapCore.mapCore.getTargetElement() as HTMLDivElement,
-      style: {pointerEvents: 'none', zIndex: '1', top: '0'},
-      layers: [
-        new GeoJsonLayer({
-          id: 'airports',
-          data: AIR_PORTS,
-          // Styles
-          filled: true,
-          pointRadiusMinPixels: 2,
-          pointRadiusScale: 2000,
-          getPointRadius: f => 11 - f.properties?.['scalerank'],
-          getFillColor: [200, 0, 80, 180],
-          // Interactive props
-          pickable: true,
-          autoHighlight: true,
-          onClick: info =>
-            // eslint-disable-next-line
-            info.object && alert(`${info.object.properties.name} (${info.object.properties.abbrev})`)
-        }),
-        new ArcLayer({
-          id: 'arcs',
-          data: AIR_PORTS,
-          dataTransform: (d: any) => d.features.filter((f: any) => f.properties.scalerank < 4),
-          // Styles
-          getSourcePosition: f => [-0.4531566, 51.4709959], // London
-          getTargetPosition: f => f.geometry.coordinates,
-          getSourceColor: [0, 128, 200],
-          getTargetColor: [200, 0, 80],
-          getWidth: 1
-        })
-      ]
-    });
-
-    // Sync deck view with OL view
-    const deckLayer = new Layer({
-      // @ts-ignore -  TODO Enrique: Confirm
-      render: ({size, viewState}) => {
-        const [width, height] = size;
-        const [longitude, latitude] = toLonLat(viewState.center);
-        const zoom = viewState.zoom - 1;
-        const bearing = (-viewState.rotation * 180) / Math.PI;
-        const deckViewState = {bearing, longitude, latitude, zoom};
-        deck.setProps({width, height, viewState: deckViewState});
-        deck.redraw();
-        // return this.mapCore.nativeElement
-      }
-    });
-
-    this.ngxMapCore.insertLayer(deckLayer)
-  }
-
-  private async initLayer2() {
+  private async initLayer() {
     const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), -24, 24);
     const client = new WeatherLayersClient.Client({
       accessToken: 'aECrzm2nNuVH1VsGjUk1', // TODO Enrique: Store
