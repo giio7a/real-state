@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="@nidiro/ngx-map-weather-layer" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="ng" />
+    </scripts>
+    <arguments value="build @nidiro/ngx-map-weather-layer -- --watch" />
+    <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.16.0/bin/node" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>
