@@ -3,8 +3,18 @@ import {Directive, Input, OnInit} from '@angular/core';
 /**
  * TODO: Describe
  */
+export interface InitialPosition {
+  latitude: number;
+  longitude: number;
+  altitude?: number;
+  zoom: number
+}
+
+/**
+ * TODO: Describe
+ */
 export interface INgxMapCore<MapImplementation> {
-  initialPosition?: {latitude: number; longitude: number; altitude?: number; zoom: number};
+  initialPosition?: InitialPosition;
 
   // TODO Enrique: Consider min and max zooms as Input
 
@@ -16,8 +26,11 @@ export interface INgxMapCore<MapImplementation> {
 }
 
 @Directive()
+/**
+ * TODO: Describe
+ */
 export abstract class NgxMapCoreCommon<MapImplementation> implements INgxMapCore<MapImplementation>, OnInit {
-  @Input() initialPosition: {latitude: number; longitude: number; altitude?: number; zoom: number} | undefined;
+  @Input() initialPosition?: InitialPosition;
 
   mapCore: MapImplementation;
 

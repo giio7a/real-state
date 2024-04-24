@@ -1,18 +1,7 @@
 <mgl-map #mapLibreMap
-         [style]="'https://demotiles.maplibre.org/style.json'"
-         [zoom]="[9]"
-         [center]="[-74.5, 40]"
+         [style]="defaultMapStyle"
+         [zoom]="[zoom]"
+         [center]="center"
          (mapLoad)="mapCore = $event"
 >
-  <mgl-layer
-    id="state-borders"
-    type="line"
-    source="maplibre"
-    sourceLayer="countries"
-    [paint]="{
-      'line-color': 'red',
-      'line-width': 2
-    }"
-  ></mgl-layer>
-
 </mgl-map>
