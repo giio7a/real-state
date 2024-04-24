@@ -19,7 +19,7 @@ export interface INgxMapCore<MapImplementation> {
 export abstract class NgxMapCoreCommon<MapImplementation> implements INgxMapCore<MapImplementation>, OnInit {
   @Input() initialPosition: {latitude: number; longitude: number; altitude?: number; zoom: number} | undefined;
 
-  mapCore!: MapImplementation; // Marking as ! because the implementations must define it on ngOnInit
+  mapCore: MapImplementation;
 
   abstract initMap(): void;
 

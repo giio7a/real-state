@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Map, View} from 'ol';
 import {fromLonLat} from 'ol/proj';
 import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
@@ -10,7 +10,8 @@ import {Layer} from 'ol/layer';
   standalone: true,
   imports: [],
   templateUrl: './ngx-open-layers-core.component.html',
-  styleUrl: './ngx-open-layers-core.component.scss'
+  styleUrl: './ngx-open-layers-core.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements INgxMapCore<Map>, OnInit {
   cursorInMap: boolean = false;

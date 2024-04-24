@@ -79,6 +79,7 @@
             ],
             "styles": [
               "node_modules/ol/ol.css",
+              "node_modules/maplibre-gl/dist/maplibre-gl.css",
               "projects/siena/src/styles.scss"
             ],
             "scripts": []
