@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {MapComponent} from '@maplibre/ngx-maplibre-gl';
 import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
 import {LayerSpecification, Map, MapOptions} from 'maplibre-gl';
+import {MapLibreCoreSettings} from './maplibre-core.settings';
 
 @Component({
   selector: 'nid-maplibre-core',
@@ -17,29 +18,7 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
     this._initialOptions.center = value.center || [0, 0]
   }
 
-  /**
-   * From [OpenStreetMap.org](https://www.openstreetmap.org/)
-   */
-  defaultMapStyle: MapOptions['style'] = {
-    version: 8,
-    sources: {
-      osm: {
-        type: "raster",
-        tiles: ["https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"],
-        tileSize: 256,
-        attribution: "&copy; OpenStreetMap Contributors",
-        maxzoom: 19
-      }
-    },
-    layers: [
-      {
-        id: "osm",
-        type: "raster",
-        source: "osm"
-      }
-    ]
-  }
-
+  defaultMapStyle: MapOptions['style'] = MapLibreCoreSettings.allegedlyOpenSourceBaseLayers.CARTO.darkMatter;
 
   private _initialOptions: MapOptions = {
     container: null,
