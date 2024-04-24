@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MapComponent} from '@maplibre/ngx-maplibre-gl';
 import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
 import {LayerSpecification, Map, MapOptions} from 'maplibre-gl';
@@ -17,6 +17,8 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
     this._initialOptions.zoom = value.zoom || 0;
     this._initialOptions.center = value.center || [0, 0]
   }
+
+  @Output() mapLoad = new EventEmitter<Map>();
 
   defaultMapStyle: MapOptions['style'] = MapLibreCoreSettings.allegedlyOpenSourceBaseLayers.CARTO.darkMatter;
 
@@ -47,5 +49,10 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
 
   override insertLayer(layer: LayerSpecification) {
     console.log('\x1B[46;30m  insert', layer);
+  }
+
+  mapLibreLoaded(map: Map) {
+    this.mapCore = map;
+    this.mapLoad.emit(map);
   }
 }
