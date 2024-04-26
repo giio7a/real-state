@@ -81,6 +81,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ol/ol.css",
               "node_modules/maplibre-gl/dist/maplibre-gl.css",
+              "projects/siena/src/angular-material-styles.scss",
               "projects/siena/src/styles.scss"
             ],
             "scripts": []
