@@ -8,6 +8,8 @@ import {
 } from '@nidiro/ngx-map-core';
 import {HomeComponent} from './home.component';
 import {NGX_OPEN_LAYERS_WEATHER_DIRECTIVES, NgxOpenLayersWeatherDirective} from '@nidiro/ngx-map-weather-layer';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MapSidePanelModule} from '../map-side-panel/map-side-panel.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,6 +18,8 @@ import {NGX_OPEN_LAYERS_WEATHER_DIRECTIVES, NgxOpenLayersWeatherDirective} from 
     HomeRoutingModule,
     NGX_OPEN_LAYERS_CORE_DIRECTIVES as [typeof NgxOpenLayersCoreComponent, typeof NgxMapLibreCoreComponent],
     NGX_OPEN_LAYERS_WEATHER_DIRECTIVES as [typeof NgxOpenLayersWeatherDirective],
+    MatSlideToggleModule,
+    MapSidePanelModule
   ]
 })
 export class HomeModule {
