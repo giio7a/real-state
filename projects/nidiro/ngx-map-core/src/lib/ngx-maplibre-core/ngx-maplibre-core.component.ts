@@ -48,7 +48,7 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
   }
 
   override insertLayer(layer: LayerSpecification) {
-    console.log('\x1B[46;30m  insert', layer);
+    this.mapCore.addLayer(layer)
   }
 
   mapLibreLoaded(map: Map) {

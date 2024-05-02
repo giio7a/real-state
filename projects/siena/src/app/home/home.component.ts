@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {InitialPosition} from '@nidiro/ngx-map-core'
 
 @Component({
@@ -7,7 +7,7 @@ import {InitialPosition} from '@nidiro/ngx-map-core'
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   /**
    * Veracruz
    */
@@ -17,4 +17,14 @@ export class HomeComponent {
     zoom: 10
   };
 
+  locationsForIsochrones: {lat: number; lon: number}[] = [];
+  costType: 'auto' | 'pedestrian' = 'auto'
+
+  ngOnInit() {
+    this.locationsForIsochrones = [{lat: this.initialPosition.latitude, lon: this.initialPosition.longitude}]
+  }
+
+  test() {
+    this.locationsForIsochrones = [{lat: 19.4326, lon: -99.1332}, ...this.locationsForIsochrones]
+  }
 }

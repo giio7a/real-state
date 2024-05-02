@@ -80,7 +80,7 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
     this.ngxMapCore.mapCore.addControl(new Control({
       element: element,
     }));
-    this.ngxMapCore.mapCore.addLayer(new Layer({
+    this.ngxMapCore.insertLayer(new Layer({
       // @ts-ignore
       render({size, viewState}) {
         const [width, height] = size;
