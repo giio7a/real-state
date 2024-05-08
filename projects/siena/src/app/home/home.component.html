@@ -1,7 +1,7 @@
 <div style="height: 100%; width: 100%;">
   <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition">
     <ng-container nidMapLibreIsochroneLayer [ngxMapCore]="mapLibreMapCore"
-                  [locations]="locationsForIsochrones" [costType]="costType"></ng-container>
+                  [locations]="locationsForIsochrones"></ng-container>
   </nid-maplibre-core>
   <sin-map-side-panel (click)="test()"></sin-map-side-panel>
 </div>

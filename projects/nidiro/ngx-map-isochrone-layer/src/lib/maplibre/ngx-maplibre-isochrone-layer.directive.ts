@@ -1,8 +1,14 @@
 import {Directive, Inject, Input, OnDestroy} from '@angular/core';
 import {NgxMapLayer, VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '@nidiro/ngx-map-core';
 import {GeoJSONSource, Map} from 'maplibre-gl';
-import {Valhalla, ValhallaCostingType, ValhallaLocation} from '@routingjs/valhalla'
-import {debounceTime, from, Subject, Subscription, switchMap, tap} from 'rxjs';
+import {Valhalla, ValhallaCostingType, ValhallaIsochrones, ValhallaLocation} from '@routingjs/valhalla'
+import {concatMap, debounceTime, delay, filter, from, iif, of, Subject, Subscription, switchMap, tap} from 'rxjs';
+
+export interface IsochroneLocationArgs {
+  location: ValhallaLocation;
+  costType: ValhallaCostingType;
+  intervals: {seconds: number; color: string}[];
+}
 
 @Directive({
   selector: '[nidMapLibreIsochroneLayer]',
@@ -12,22 +18,13 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   /**
    * // TODO Enrique:
    */
-  @Input() set locations(value: ValhallaLocation[]) {
+  @Input() set locations(value: IsochroneLocationArgs[]) {
     this._locations = value;
     this.requestNotifier$.next();
   }
 
-  @Input() set costType(value: ValhallaCostingType) {
-    this._costType = value
-    this.requestNotifier$.next();
-  }
-
-  get locations(): ValhallaLocation[] {
+  get locations(): IsochroneLocationArgs[] {
     return this._locations
-  }
-
-  get costType(): ValhallaCostingType {
-    return this._costType
   }
 
   override getLayerId(): string {
@@ -45,12 +42,13 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   // TODO Enrique: Perhaps this can be moved to be a singleton and share with other layers
   private readonly valhallaClient: Valhalla
 
-  private _locations: ValhallaLocation[];
-  private _costType: ValhallaCostingType;
+  private _locations: IsochroneLocationArgs[];
 
-  private hasAddedLayer = false;
   private requestNotifier$ = new Subject<void>();
   private subscriptions = new Subscription()
+
+  private readonly TIME_BETWEEN_REQUESTS = 500;
+  private readonly TIME_TO_DEBOUNCE_LOCATIONS_CHANGE = 500;
 
   constructor(@Inject(VALHALLA_API_CONFIG) valhallaConfig: ValhallaApiConfigToken) {
     super();
@@ -66,43 +64,58 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   private registerDebouncedRequest() {
     this.subscriptions.add(
       this.requestNotifier$.pipe(
-        debounceTime(3000),
+        debounceTime(this.TIME_TO_DEBOUNCE_LOCATIONS_CHANGE),
+        filter(() => !!this.locations?.length),
         switchMap(() => this.performDataRequest()),
-        // catchError(()=>of()), // TODO Enrique: handle error
-        tap(response => {
-          const geojson = response.raw;
-          const source = this.ngxMapCore.mapCore.getSource('isochrone') as GeoJSONSource
-          if (source) {
-            source.setData(geojson)
-          } else {
-            this.ngxMapCore.mapCore.addSource('isochrone', {
-              type: 'geojson',
-              data: geojson
-            });
-          }
-          this.initLayer();
-        }),
-      ).subscribe())
+      ).subscribe(data => {
+        // console.log('\x1B[46;30m ALL', data);
+      }))
   }
+
 
   private performDataRequest() {
-    // TODO Enrique: Implement multiple locations!
-    return from(this.valhallaClient.reachability([this.locations[0].lat, this.locations[0].lon], this.costType, [10 * 60, 20 * 60], {polygons: true}))
+    return from(this.locations)
+      .pipe(
+        concatMap((locationArgs, index) =>
+          from(this.valhallaClient.reachability([locationArgs.location.lat, locationArgs.location.lon], locationArgs.costType, locationArgs.intervals.map(i => i.seconds), {
+            polygons: true,
+            colors: locationArgs.intervals.map(i => i.color)
+          }).catch<ValhallaIsochrones>(() => ({
+            raw: undefined,
+            isochrones: []
+          })))
+            .pipe(
+              tap(response => {
+                const sourceId = `nid-isochrone-${index}`;
+                const geojson = response.raw;
+                if (!geojson) return
+                const source = this.ngxMapCore.mapCore.getSource(sourceId) as GeoJSONSource
+                if (source) {
+                  source.setData(geojson)
+                } else {
+                  this.ngxMapCore.mapCore.addSource(sourceId, {
+                    type: 'geojson',
+                    data: geojson
+                  });
+                  this.insertLayer(sourceId);
+                }
+              }),
+              switchMap(response => iif(() => index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
+            )
+        )
+      );
   }
 
-  private initLayer() {
-    if (this.hasAddedLayer) return;
-
+  private insertLayer(sourceId: string) {
     this.ngxMapCore.insertLayer({
-      'id': 'isochrone',
-      'type': 'fill',
-      'source': 'isochrone',
-      'layout': {},
-      'paint': {
-        'fill-color': '#088',
-        'fill-opacity': 0.8
+      id: `${sourceId}__layer`,
+      type: 'fill',
+      source: sourceId,
+      layout: {},
+      paint: {
+        'fill-color': ['get', 'fillColor'],
+        'fill-opacity': ['get', 'fillOpacity'],
       }
     })
-    this.hasAddedLayer = true;
   }
 }
