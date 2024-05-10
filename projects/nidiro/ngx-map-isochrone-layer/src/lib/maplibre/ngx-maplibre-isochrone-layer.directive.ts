@@ -1,8 +1,21 @@
-import {Directive, Inject, Input, OnDestroy} from '@angular/core';
-import {NgxMapLayer, VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '@nidiro/ngx-map-core';
+import {Directive, EventEmitter, Inject, Input, OnDestroy, Output} from '@angular/core';
+import {NgxMapLayer, VALHALLA_API_CLIENT, VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '@nidiro/ngx-map-core';
 import {GeoJSONSource, Map} from 'maplibre-gl';
 import {Valhalla, ValhallaCostingType, ValhallaIsochrones, ValhallaLocation} from '@routingjs/valhalla'
-import {concatMap, debounceTime, delay, filter, from, iif, of, Subject, Subscription, switchMap, tap} from 'rxjs';
+import {
+  concatMap,
+  debounceTime,
+  delay,
+  filter,
+  finalize,
+  from,
+  iif,
+  of,
+  Subject,
+  Subscription,
+  switchMap,
+  tap
+} from 'rxjs';
 
 export interface IsochroneLocationArgs {
   location: ValhallaLocation;
@@ -23,12 +36,14 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
     this.requestNotifier$.next();
   }
 
+  @Output() locationsLoaded = new EventEmitter<void>();
+
   get locations(): IsochroneLocationArgs[] {
     return this._locations
   }
 
   override getLayerId(): string {
-    return 'isochrone-maplibre'
+    return 'isochrone-maplibre' + Date.now();
   }
 
   override setLayerVisibility(isVisible: boolean): void {
@@ -39,20 +54,23 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
     // TODO Enrique: Implement
   }
 
-  // TODO Enrique: Perhaps this can be moved to be a singleton and share with other layers
-  private readonly valhallaClient: Valhalla
-
   private _locations: IsochroneLocationArgs[];
 
   private requestNotifier$ = new Subject<void>();
   private subscriptions = new Subscription()
 
+  /**
+   * This delay is to avoid the "Too many requests" error from the Valhalla API.
+   *
+   * {@link https://github.com/valhalla/valhalla/discussions/3373#discussioncomment-1644713 Rate limit}.
+   * @private
+   */
   private readonly TIME_BETWEEN_REQUESTS = 500;
   private readonly TIME_TO_DEBOUNCE_LOCATIONS_CHANGE = 500;
 
-  constructor(@Inject(VALHALLA_API_CONFIG) valhallaConfig: ValhallaApiConfigToken) {
+  constructor(@Inject(VALHALLA_API_CONFIG) valhallaConfig: ValhallaApiConfigToken,
+              @Inject(VALHALLA_API_CLIENT) private valhallaClient: Valhalla) {
     super();
-    this.valhallaClient = new Valhalla()
     this.registerDebouncedRequest();
   }
 
@@ -68,12 +86,12 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
         filter(() => !!this.locations?.length),
         switchMap(() => this.performDataRequest()),
       ).subscribe(data => {
-        // console.log('\x1B[46;30m ALL', data);
       }))
   }
 
 
   private performDataRequest() {
+    // TODO Enrique: According to the docs, the Isochrones API can handle multiple locations at once
     return from(this.locations)
       .pipe(
         concatMap((locationArgs, index) =>
@@ -86,7 +104,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
           })))
             .pipe(
               tap(response => {
-                const sourceId = `nid-isochrone-${index}`;
+                const sourceId = `${this.getLayerId()}-${index}`;
                 const geojson = response.raw;
                 if (!geojson) return
                 const source = this.ngxMapCore.mapCore.getSource(sourceId) as GeoJSONSource
@@ -102,7 +120,10 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
               }),
               switchMap(response => iif(() => index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
             )
-        )
+        ),
+        finalize(() => {
+          this.locationsLoaded.emit();
+        })
       );
   }
 

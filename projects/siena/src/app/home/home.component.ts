@@ -13,9 +13,9 @@ export class HomeComponent implements OnInit {
    * Veracruz
    */
   initialPosition: InitialPosition = {
-    longitude: -96.1499142,
-    latitude: 19.1686418,
-    zoom: 10
+    longitude: -94.43294,
+    latitude: 18.14104,
+    zoom: 13
   };
 
   locationsForIsochrones: IsochroneLocationArgs[] = [];
@@ -25,10 +25,13 @@ export class HomeComponent implements OnInit {
     {seconds: 900, color: 'ff0000'}
   ]
 
+  mapLoaded: boolean;
+  isochronesLoaded: boolean = false;
+
   ngOnInit() {
     this.locationsForIsochrones = [{
       location: {lat: this.initialPosition.latitude, lon: this.initialPosition.longitude},
-      costType: 'auto',
+      costType: 'pedestrian',
       intervals: this.intervals
     }]
   }
