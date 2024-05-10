@@ -48,7 +48,11 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
   }
 
   override insertLayer(layer: LayerSpecification) {
-    console.log('\x1B[46;30m  insert', layer);
+    if (this.mapCore.getLayer(layer.id)) {
+      console.log('\x1B[46;30m  Layer already exists in MapLibre core',); // TODO Enrique: Conditional to config.debug
+      return;
+    }
+    this.mapCore.addLayer(layer)
   }
 
   mapLibreLoaded(map: Map) {
