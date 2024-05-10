@@ -1,4 +1,4 @@
-import {Directive, OnInit} from '@angular/core';
+import {Directive, Inject, OnInit} from '@angular/core';
 import {NgxMapLayer} from '@nidiro/ngx-map-core'
 import {Layer} from 'ol/layer';
 import {toLonLat} from 'ol/proj';
@@ -13,6 +13,7 @@ import {BASEMAP_RASTER_STYLE_URL} from './basemap';
 import {XYZ} from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import {Control} from 'ol/control';
+import {NGX_WEATHER_LAYER_CONFIG, WeatherLayersConfigToken} from './injection-token';
 
 @Directive({
   selector: '[nidOpenLayersWeatherLayer]',
@@ -32,7 +33,7 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
     // TODO Enrique: Implement
   }
 
-  constructor() {
+  constructor(@Inject(NGX_WEATHER_LAYER_CONFIG) private config: WeatherLayersConfigToken) {
     super();
     console.log('\x1B[46;30m Weather Directive');
   }
@@ -44,7 +45,7 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
   private async initLayer() {
     const datetimeRange = WeatherLayers.offsetDatetimeRange(new Date().toISOString(), -24, 24);
     const client = new WeatherLayersClient.Client({
-      accessToken: 'aECrzm2nNuVH1VsGjUk1', // TODO Enrique: Store
+      accessToken: this.config.weatherLayersAccessToken,
     });
 
     const datasets = await client.loadCatalog();

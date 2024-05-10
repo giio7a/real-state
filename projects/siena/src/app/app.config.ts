@@ -3,8 +3,9 @@ import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '@nidiro/ngx-map-core';
+import {VALHALLA_API_CLIENT, VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '@nidiro/ngx-map-core';
 import {HttpClient, provideHttpClient} from '@angular/common/http';
+import {Valhalla} from '@routingjs/valhalla';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     {provide: VALHALLA_API_CONFIG, useValue: valhallaConfig},
+    {provide: VALHALLA_API_CLIENT, useValue: new Valhalla()}, // TODO Enrique: We can make the ValhallaClient to be singleton and manage the requests sequentially
     provideHttpClient(),
     importProvidersFrom(
       TranslateModule.forRoot({
