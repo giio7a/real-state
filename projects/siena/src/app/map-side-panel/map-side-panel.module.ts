@@ -3,6 +3,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {MapSidePanelComponent} from './map-side-panel.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {MatButtonModule} from "@angular/material/button";
     CommonModule,
     MatIconModule,
     NgOptimizedImage,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ]
 })
 export class MapSidePanelModule { }
