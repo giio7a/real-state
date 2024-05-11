@@ -1,6 +1,6 @@
 <div style="height: 100%; width: 100%;">
   <nid-open-layers-core #mapCore [initialPosition]="initialPosition">
-    <ng-container nidOpenLayersWeatherLayer [ngxMapCore]="mapCore"></ng-container>
+    <ng-container nidOpenLayersWeatherLayer [ngxMapCore]="mapCore" [dataset]="weatherDataset"></ng-container>
   </nid-open-layers-core>
   <sin-map-side-panel (click)="test()"></sin-map-side-panel>
 </div>
