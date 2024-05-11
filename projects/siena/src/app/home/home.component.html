@@ -1,9 +1,7 @@
 <div style="height: 100%; width: 100%;">
-  <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true">
-    <ng-container nidMapLibreIsochroneLayer *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
-                  [locations]="locationsForIsochrones" (locationsLoaded)="isochronesLoaded = true"></ng-container>
-    <sin-oxxo-coverage *ngIf="isochronesLoaded" [ngxMapCore]="mapLibreMapCore" [proximityByWalkingTimeInSeconds]="180"></sin-oxxo-coverage>
-  </nid-maplibre-core>
+  <nid-open-layers-core #mapCore [initialPosition]="initialPosition">
+    <ng-container nidOpenLayersWeatherLayer [ngxMapCore]="mapCore"></ng-container>
+  </nid-open-layers-core>
   <sin-map-side-panel (click)="test()"></sin-map-side-panel>
 </div>
 
