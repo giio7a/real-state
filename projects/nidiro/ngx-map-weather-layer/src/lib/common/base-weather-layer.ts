@@ -1,10 +1,13 @@
-import {Directive, Inject, Input, OnInit} from '@angular/core';
-import {NgxMapLayer} from '@nidiro/ngx-map-core'
-import {Layer} from 'ol/layer';
-import {toLonLat} from 'ol/proj';
-import {Map} from 'ol'
-import {Deck, MapView} from '@deck.gl/core/typed';
-import {ClipExtension} from '@deck.gl/extensions/typed';
+import {Directive, Input} from '@angular/core';
+import {
+  CONTOUR_LAYER_DATASET_CONFIG,
+  GRID_LAYER_DATASET_CONFIG,
+  HIGH_LOW_LAYER_DATASET_CONFIG,
+  PARTICLE_LAYER_DATASET_CONFIG,
+  TOOLTIP_CONTROL_DATASET_CONFIG,
+  WEATHER_LAYERS_UTIL
+} from './weatherlayers-gl.config';
+import {NgxMapLayer} from '@nidiro/ngx-map-core';
 import {
   ContourLayer,
   DEFAULT_ICON_COLOR,
@@ -27,43 +30,35 @@ import {
   Placement,
   RasterLayer,
   TooltipControl,
-  UnitSystem,
+  UnitSystem
 } from 'weatherlayers-gl';
 import {Client} from 'weatherlayers-gl/client';
-import {BASEMAP_RASTER_STYLE_URL} from './basemap';
-import {XYZ} from 'ol/source';
-import TileLayer from 'ol/layer/Tile';
-import {Control} from 'ol/control';
-import {NGX_WEATHER_LAYER_CONFIG, WeatherLayersConfigToken} from './injection-token';
-import {
-  CONTOUR_LAYER_DATASET_CONFIG,
-  GRID_LAYER_DATASET_CONFIG,
-  HIGH_LOW_LAYER_DATASET_CONFIG,
-  PARTICLE_LAYER_DATASET_CONFIG,
-  TOOLTIP_CONTROL_DATASET_CONFIG,
-  WEATHER_LAYERS_UTIL,
-} from './weatherlayers-gl.config';
+import {WeatherLayersConfigToken} from './injection-token';
+import {ClipExtension} from '@deck.gl/extensions/typed';
+import {Deck} from '@deck.gl/core/typed';
 
-@Directive({
-  selector: '[nidOpenLayersWeatherLayer]',
-  standalone: true,
-})
-export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements OnInit {
+
+@Directive()
+export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<MapImplementation> {
+  abstract override getLayerId(): string;
+
+  abstract override setLayerVisibility(isVisible: boolean): void;
+
+  abstract override removeSelfLayer(): void;
+
   @Input() set dataset(value: string) {
     this._dataset = value;
-    this.update();
+    this.refreshLayer();
   }
 
   private _dataset: string = WEATHER_LAYERS_UTIL.DEFAULT_DATASET;
-
-  private deckInstance: Deck;
+  protected deckInstance: Deck;
   private readonly weatherLayersClient: Client;
   private tooltipControl: TooltipControl;
 
   private readonly datetimeRange = offsetDatetimeRange(new Date().toISOString(), -24, 24);
 
-  // TODO Enrique: rename
-  private readonly update: () => Promise<void> = async () => {
+  protected readonly refreshLayer: () => Promise<void> = async () => {
     const config = this.config;
     if (!config.dataset || !this.weatherLayersClient) {
       return;
@@ -228,7 +223,6 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
     });
     // attributionControl.updateConfig({attribution});
   }
-  ;
 
   get config() {
     return {
@@ -306,95 +300,20 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
     }
   }
 
-  override getLayerId() {
-    return 'weather-openLayers-' + Date.now();
-  }
-
-  override setLayerVisibility() {
-    // TODO Enrique: Implement
-  }
-
-  override removeSelfLayer() {
-    // TODO Enrique: Implement
-  }
-
-  constructor(@Inject(NGX_WEATHER_LAYER_CONFIG) private weatherLayerConfig: WeatherLayersConfigToken) {
+  constructor(protected weatherLayerConfig: WeatherLayersConfigToken) {
     super();
     this.weatherLayersClient = new Client({
       accessToken: weatherLayerConfig.weatherLayersAccessToken,
     });
   }
 
-  ngOnInit() {
-    this.initLayer();
-  }
-
-  private async initLayer() {
+  /**
+   * Must be called during the initialization of the layer.
+   * @protected
+   */
+  protected async initLayer() {
     const datasets = await this.weatherLayersClient.loadCatalog();
     this.weatherLayerConfig.debug && console.log('\x1B[46;30m Available Datasets: ', JSON.stringify(datasets, null, 2));
-
-    // TODO Enrique: This has to be moved to a base layer component!
-    this.ngxMapCore.insertLayer(new TileLayer({source: new XYZ({url: BASEMAP_RASTER_STYLE_URL}), maxZoom: 22}));
-
-    /**
-     * overlaid deck.gl
-     * see https://github.com/visgl/deck.gl/blob/8.9-release/examples/get-started/pure-js/openlayers/app.js
-     * updated to support picking
-     */
-      // TODO Enrique: CONFIRM - Using new div?
-    const element = document.createElement('div');
-    element.style.pointerEvents = 'none';
-
-    // Because it is the OpenLayers implementation, we are going to create its own instance of Deck.gl.
-    this.deckInstance = new Deck({
-      parent: element,
-      initialViewState: {longitude: 0, latitude: 0, zoom: 1}, // This is not meaningful since the render function would immediately set something else
-      controller: false,
-      views: [
-        new MapView({repeat: true}),
-      ],
-      layers: [],
-    });
-    this.ngxMapCore.mapCore.addControl(new Control({element}));
-    this.ngxMapCore.insertLayer(new Layer({
-      render: ({size, viewState}) => {
-        const [width, height] = size;
-        const [longitude, latitude] = toLonLat(viewState.center);
-        const zoom = viewState.zoom - 1;
-        const bearing = (-viewState.rotation * 180) / Math.PI;
-        const deckViewState = {bearing, longitude, latitude, zoom};
-        this.deckInstance.setProps({width, height, viewState: deckViewState});
-        this.deckInstance.redraw();
-        return element;
-      }
-    }));
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerdown', event => {
-      this.deckInstance._onPointerDown({
-        // @ts-ignore
-        type: event.type,
-        srcEvent: event,
-        offsetCenter: {x: event.offsetX / window.devicePixelRatio, y: event.offsetY / window.devicePixelRatio},
-        leftButton: event.buttons === 1,
-        rightButton: event.buttons === 2
-      });
-    });
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointermove', event => {
-      this.deckInstance._onPointerMove({
-        // @ts-ignore
-        type: event.type,
-        srcEvent: event,
-        offsetCenter: {x: event.offsetX / window.devicePixelRatio, y: event.offsetY / window.devicePixelRatio},
-        leftButton: event.buttons === 1,
-        rightButton: event.buttons === 2
-      });
-    });
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerleave', event => {
-      this.deckInstance._onPointerMove({
-        // @ts-ignore
-        type: event.type,
-        srcEvent: event
-      });
-    });
 
     // tooltip
     this.tooltipControl = new TooltipControl({
@@ -403,7 +322,6 @@ export class NgxOpenLayersWeatherDirective extends NgxMapLayer<Map> implements O
     });
     this.tooltipControl.addTo(this.deckInstance.getCanvas()!.parentElement!);
     this.deckInstance.setProps({onHover: event => this.tooltipControl.updatePickingInfo(event)});
-
-    return this.update();
   }
+
 }
