@@ -16,6 +16,7 @@ const valhallaConfig: ValhallaApiConfigToken = {
 }
 
 const weatherLayersConfig: WeatherLayersConfigToken = {
+  debug: true,
   weatherLayersAccessToken: environment.weatherLayersToken
 }
 
