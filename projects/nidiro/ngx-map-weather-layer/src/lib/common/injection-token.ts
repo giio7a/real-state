@@ -1,6 +1,7 @@
 import {InjectionToken} from '@angular/core';
 
 export interface WeatherLayersConfigToken {
+  debug?: boolean;
   /**
    * // TODO Enrique: Add description
    */

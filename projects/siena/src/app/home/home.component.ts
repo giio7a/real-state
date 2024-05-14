@@ -27,6 +27,9 @@ export class HomeComponent implements OnInit {
 
   mapLoaded: boolean;
   isochronesLoaded: boolean = false;
+  weatherDataset = 'gfs/wind_10m_above_ground';
+
+  // weatherDataset = 'gfswave/waves';
 
   ngOnInit() {
     this.locationsForIsochrones = [{
@@ -37,6 +40,7 @@ export class HomeComponent implements OnInit {
   }
 
   test() {
+    this.weatherDataset = 'gfs/temperature_2m_above_ground'
     this.locationsForIsochrones = [{
       location: {lat: 19.4326, lon: -99.1332},
       costType: 'auto',
