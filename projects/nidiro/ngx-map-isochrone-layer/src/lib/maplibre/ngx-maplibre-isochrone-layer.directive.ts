@@ -91,6 +91,9 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
 
 
   private performDataRequest() {
+    this.valhallaClient.directions([[46.98, 9.733], [46.739, 8.302]], 'auto').then((res) => {
+      console.log('\x1B[46;97m>>>>>> 123123123', res);
+    });
     // TODO Enrique: According to the docs, the Isochrones API can handle multiple locations at once
     return from(this.locations)
       .pipe(

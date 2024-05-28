@@ -124,6 +124,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "projects/siena/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "siena:build:production"
