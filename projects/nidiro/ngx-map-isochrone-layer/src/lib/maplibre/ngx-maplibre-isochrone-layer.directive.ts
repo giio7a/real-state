@@ -20,7 +20,7 @@ import {
 export interface IsochroneLocationArgs {
   location: ValhallaLocation;
   costType: ValhallaCostingType;
-  intervals: {seconds: number; color: string}[];
+  intervals: { seconds: number; color: string }[];
 }
 
 @Directive({
@@ -65,7 +65,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
    * {@link https://github.com/valhalla/valhalla/discussions/3373#discussioncomment-1644713 Rate limit}.
    * @private
    */
-  private readonly TIME_BETWEEN_REQUESTS = 500;
+  private readonly TIME_BETWEEN_REQUESTS = 0;
   private readonly TIME_TO_DEBOUNCE_LOCATIONS_CHANGE = 500;
 
   constructor(@Inject(VALHALLA_API_CONFIG) valhallaConfig: ValhallaApiConfigToken,
@@ -118,7 +118,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
                   this.insertLayer(sourceId);
                 }
               }),
-              switchMap(response => iif(() => index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
+              switchMap(response => iif(() => !!this.TIME_BETWEEN_REQUESTS && index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
             )
         ),
         finalize(() => {

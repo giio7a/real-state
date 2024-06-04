@@ -25,7 +25,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     {provide: VALHALLA_API_CONFIG, useValue: valhallaConfig},
-    {provide: VALHALLA_API_CLIENT, useValue: new Valhalla()}, // TODO Enrique: We can make the ValhallaClient to be singleton and manage the requests sequentially
+    {
+      provide: VALHALLA_API_CLIENT, useValue: new Valhalla({
+        baseUrl: 'http://localhost:4200/valhalla', // TODO Enrique: Depend on environment?
+      })
+    }, // TODO Enrique: We can make the ValhallaClient to be singleton and manage the requests sequentially
     {provide: NGX_WEATHER_LAYER_CONFIG, useValue: weatherLayersConfig},
     provideHttpClient(),
     importProvidersFrom(
