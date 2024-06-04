@@ -17,12 +17,14 @@ import {NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES, NgxMaplibreIsochroneLayerDirective} f
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MapSidePanelModule} from '../map-side-panel/map-side-panel.module';
 import {OxxoCoverageComponent} from '../map-layers/oxxo-coverage/oxxo-coverage.component';
+import {BamaCoverageComponent} from "../map-layers/bama-coverage/bama-coverage.component";
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
+    BamaCoverageComponent,
     OxxoCoverageComponent,
     // TODO Enrique: These imports are not necessary, but where left here to show what might be needed
     NGX_OPEN_LAYERS_CORE_DIRECTIVES as [typeof NgxOpenLayersCoreComponent, typeof NgxMapLibreCoreComponent],

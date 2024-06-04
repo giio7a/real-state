@@ -23,7 +23,7 @@ export class OxxoCoverageComponent implements OnInit {
 
   @Input() ngxMapCore: NgxMapLibreCoreComponent;
   @Input() proximityByWalkingTimeInSeconds = 60;
-  @Input() coverageAreaColor = '00ff00';
+  @Input() coverageAreaColor = 'ff0000';
 
   location: {stateId: string; municipalityId: string} = {
     stateId: '30', // Veracruz

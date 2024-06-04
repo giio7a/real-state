@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
   ]
 
   mapLoaded: boolean;
-  isochronesLoaded: boolean = false;
   weatherDataset = 'gfs/wind_10m_above_ground';
 
   // weatherDataset = 'gfswave/waves';
