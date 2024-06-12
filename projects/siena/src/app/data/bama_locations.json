@@ -1,0 +1,602 @@
+[
+  {
+    "title": "Bama 1 de Mayo",
+    "lat": 18.1321271,
+    "lng": -94.4416426
+  },
+  {
+    "title": "Bama 1.20",
+    "lat": 18.1444521,
+    "lng": -94.41528609999999
+  },
+  {
+    "title": "Bama 69",
+    "lat": 18.0985211,
+    "lng": -94.4586384
+  },
+  {
+    "title": "Bama Acayucan 01",
+    "lat": 17.9525606,
+    "lng": -94.909617
+  },
+  {
+    "title": "Bama Acayucan 02",
+    "lat": 17.9461268,
+    "lng": -94.9064149
+  },
+  {
+    "title": "Bama Acayucan 04",
+    "lat": 17.933538,
+    "lng": -94.9149752
+  },
+  {
+    "title": "Bama Acayucan IMSS",
+    "lat": 17.9557494,
+    "lng": -94.9188312
+  },
+  {
+    "title": "Bama Agua Dulce 01",
+    "lat": 18.1418906,
+    "lng": -94.14118549999999
+  },
+  {
+    "title": "Bama Agua Dulce 03",
+    "lat": 18.1238452,
+    "lng": -94.1459184
+  },
+  {
+    "title": "Bama Agua Dulce 02",
+    "lat": 18.1426883,
+    "lng": -94.14083889999999
+  },
+  {
+    "title": "Bama Agua Dulce 04",
+    "lat": 18.1454283,
+    "lng": -94.14058969999999
+  },
+  {
+    "title": "Bama Agua Dulce 05",
+    "lat": 18.1474637,
+    "lng": -94.14614329999999
+  },
+  {
+    "title": "Bama Agua Dulce 06",
+    "lat": 18.1188248,
+    "lng": -94.15305719999999
+  },
+  {
+    "title": "Bama Alameda",
+    "lat": 18.1232903,
+    "lng": -94.47082569999999
+  },
+  {
+    "title": "Bama Allende 01",
+    "lat": 18.1503622,
+    "lng": -94.4057737
+  },
+  {
+    "title": "Bama Allende 02",
+    "lat": 18.1532079,
+    "lng": -94.3770602
+  },
+  {
+    "title": "Bama Allende 03",
+    "lat": 18.1535063,
+    "lng": -94.4033996
+  },
+  {
+    "title": "Bama Autocarton",
+    "lat": 18.1547976,
+    "lng": -94.4264757
+  },
+  {
+    "title": "Bama Avenida Uno",
+    "lat": 18.1367694,
+    "lng": -94.4514763
+  },
+  {
+    "title": "Bama Candy",
+    "lat": 18.1554386,
+    "lng": -94.4014765
+  },
+  {
+    "title": "Bama Chinameca 01",
+    "lat": 18.0285845,
+    "lng": -94.68053379999999
+  },
+  {
+    "title": "Bama Club de Pesca",
+    "lat": 18.1472801,
+    "lng": -94.4107261
+  },
+  {
+    "title": "Bama Conasupo",
+    "lat": 18.1367614,
+    "lng": -94.47247039999999
+  },
+  {
+    "title": "Bama Cosoleacaque 01",
+    "lat": 18.0054042,
+    "lng": -94.61882159999999
+  },
+  {
+    "title": "Bama Cuarto Frio",
+    "lat": 18.1124302,
+    "lng": -94.4486974
+  },
+  {
+    "title": "Bama Cuichapa",
+    "lat": 17.9387172,
+    "lng": -94.2819549
+  },
+  {
+    "title": "Bama El Naranjito",
+    "lat": 18.0034561,
+    "lng": -94.60823219999999
+  },
+  {
+    "title": "Bama El Pino",
+    "lat": 18.1248641,
+    "lng": -94.4314531
+  },
+  {
+    "title": "Bama El Pulgarcito",
+    "lat": 18.1486107,
+    "lng": -94.4207811
+  },
+  {
+    "title": "Bama Electricistas",
+    "lat": 18.1091424,
+    "lng": -94.4558212
+  },
+  {
+    "title": "Bama Etileno XXII",
+    "lat": 18.0669944,
+    "lng": -94.3906907
+  },
+  {
+    "title": "Bama Excaseta",
+    "lat": 18.1251375,
+    "lng": -94.4332589
+  },
+  {
+    "title": "Bama Fovissste",
+    "lat": 18.1435783,
+    "lng": -94.4837919
+  },
+  {
+    "title": "Bama Frutos de la Revolución",
+    "lat": 18.1360019,
+    "lng": -94.4232718
+  },
+  {
+    "title": "Bama Gaviotas",
+    "lat": 18.1396717,
+    "lng": -94.4996453
+  },
+  {
+    "title": "Bama Hidalgo",
+    "lat": 18.1427983,
+    "lng": -94.4304252
+  },
+  {
+    "title": "Bama Independencia",
+    "lat": 18.1447383,
+    "lng": -94.4348275
+  },
+  {
+    "title": "Bama Iquisa",
+    "lat": 18.142652,
+    "lng": -94.461242
+  },
+  {
+    "title": "Bama Ixhuatlan 01",
+    "lat": 18.025817,
+    "lng": -94.3962241
+  },
+  {
+    "title": "Bama Ixhuatlan 02",
+    "lat": 18.0258174,
+    "lng": -94.39622519999999
+  },
+  {
+    "title": "Bama Jaltipan 01",
+    "lat": 17.9604093,
+    "lng": -94.7236855
+  },
+  {
+    "title": "Bama Jaltipan 02",
+    "lat": 17.964389,
+    "lng": -94.717252
+  },
+  {
+    "title": "Bama Juan Escutia",
+    "lat": 18.1387543,
+    "lng": -94.4457728
+  },
+  {
+    "title": "Bama La Gloria",
+    "lat": 18.1390783,
+    "lng": -94.5114566
+  },
+  {
+    "title": "Bama La Noria",
+    "lat": 18.1363242,
+    "lng": -94.4696269
+  },
+  {
+    "title": "Bama La Suegra",
+    "lat": 18.1405934,
+    "lng": -94.4583751
+  },
+  {
+    "title": "Bama La Via",
+    "lat": 18.143117,
+    "lng": -94.4170722
+  },
+  {
+    "title": "Bama las Brisas",
+    "lat": 18.1479418,
+    "lng": -94.4819074
+  },
+  {
+    "title": "Bama Las Choapas 01",
+    "lat": 17.899327,
+    "lng": -94.09961
+  },
+  {
+    "title": "Bama Las Choapas 02",
+    "lat": 17.9128547,
+    "lng": -94.0928802
+  },
+  {
+    "title": "Bama Las Choapas 03",
+    "lat": 17.9349378,
+    "lng": -94.1037987
+  },
+  {
+    "title": "Bama Las Choapas 04",
+    "lat": 17.9089928,
+    "lng": -94.0920373
+  },
+  {
+    "title": "Bama Las Choapas 05",
+    "lat": 17.89323,
+    "lng": -94.1046844
+  },
+  {
+    "title": "Bama Las Choapas 06",
+    "lat": 17.9349847,
+    "lng": -94.1037685
+  },
+  {
+    "title": "Bama Las Fuentes",
+    "lat": 17.9916628,
+    "lng": -94.5707494
+  },
+  {
+    "title": "Bama Lazaro Cardenas",
+    "lat": 18.1539978,
+    "lng": -94.4253301
+  },
+  {
+    "title": "Bama Lomas",
+    "lat": 18.1408874,
+    "lng": -94.5276346
+  },
+  {
+    "title": "Bama Lopez Mateos",
+    "lat": 18.1249961,
+    "lng": -94.4348881
+  },
+  {
+    "title": "Bama Los Camarones",
+    "lat": 18.1516487,
+    "lng": -94.43618029999999
+  },
+  {
+    "title": "Bama Marinero",
+    "lat": 18.1338298,
+    "lng": -94.45309499999999
+  },
+  {
+    "title": "Bama Mintatitlan 01 &quot;Petrolera&quot;",
+    "lat": 18.0031108,
+    "lng": -94.54490969999999
+  },
+  {
+    "title": "Bama Minatitlan 02 &quot;Santa Clara&quot;",
+    "lat": 17.9911234,
+    "lng": -94.5582719
+  },
+  {
+    "title": "Bama Minatitlan 03 &quot;Bellaescusa&quot;",
+    "lat": 17.9935542,
+    "lng": -94.5785535
+  },
+  {
+    "title": "Bama Minatitlan 04 &quot;Justo Sierra&quot;",
+    "lat": 17.9877284,
+    "lng": -94.5528425
+  },
+  {
+    "title": "Bama Minatitlan 05 &quot;Panal&quot;",
+    "lat": 17.9846765,
+    "lng": -94.54448459999999
+  },
+  {
+    "title": "Bama Minatitlan 06 &quot;Las Fuentes&quot;",
+    "lat": 17.9916628,
+    "lng": -94.5707494
+  },
+  {
+    "title": "Bama Minicero",
+    "lat": 18.1365971,
+    "lng": -94.4300181
+  },
+  {
+    "title": "Bama Nanchital 01 &quot;Centro&quot;",
+    "lat": 18.0690309,
+    "lng": -94.4047556
+  },
+  {
+    "title": "Bama Nanchital 02 &quot;Agencia&quot;",
+    "lat": 18.0751858,
+    "lng": -94.410533
+  },
+  {
+    "title": "Bama Nanchital 03 &quot;Guadalupe&quot;",
+    "lat": 18.0568276,
+    "lng": -94.4088203
+  },
+  {
+    "title": "Bama Olmeca 01",
+    "lat": 18.1445104,
+    "lng": -94.53754049999999
+  },
+  {
+    "title": "Bama Olmeca 02",
+    "lat": 18.1565309,
+    "lng": -94.5525177
+  },
+  {
+    "title": "Bama Olmeca 03",
+    "lat": 18.1400617,
+    "lng": -94.5548869
+  },
+  {
+    "title": "Bama Olutla 01 &quot;Cuchilla&quot;",
+    "lat": 17.9263917,
+    "lng": -94.890101
+  },
+  {
+    "title": "Bama Oteapan",
+    "lat": 17.9956276,
+    "lng": -94.6616196
+  },
+  {
+    "title": "Bama Paraiso",
+    "lat": 18.1480418,
+    "lng": -94.4761911
+  },
+  {
+    "title": "Bama Paraiso",
+    "lat": 18.1468888,
+    "lng": -94.471178
+  },
+  {
+    "title": "Bama Paseo",
+    "lat": 18.1522364,
+    "lng": -94.41653509999999
+  },
+  {
+    "title": "Bama Paseo",
+    "lat": 18.1563273,
+    "lng": -94.4185158
+  },
+  {
+    "title": "Bama Pedro Moreno",
+    "lat": 18.1378215,
+    "lng": -94.4287196
+  },
+  {
+    "title": "Bama Pensiones",
+    "lat": 18.1434427,
+    "lng": -94.4811038
+  },
+  {
+    "title": "",
+    "lat": 18.1485038,
+    "lng": -94.4605857
+  },
+  {
+    "title": "Bama Puerto Esmeralda",
+    "lat": 18.1469364,
+    "lng": -94.5161102
+  },
+  {
+    "title": "Bama Puerto Esmeralda 02",
+    "lat": 18.148839,
+    "lng": -94.5182736
+  },
+  {
+    "title": "Bama Punta Caracol",
+    "lat": 18.1439936,
+    "lng": -94.5014329
+  },
+  {
+    "title": "Bama Quevedo",
+    "lat": 18.1554386,
+    "lng": -94.4014765
+  },
+  {
+    "title": "Bama Rancho Alegre",
+    "lat": 18.1337172,
+    "lng": -94.46626010000001
+  },
+  {
+    "title": "Bama Revolución",
+    "lat": 18.1478295,
+    "lng": -94.43088600000002
+  },
+  {
+    "title": "Bama Roman Marin",
+    "lat": 18.144524,
+    "lng": -94.42314239999999
+  },
+  {
+    "title": "Bama San Gabriel",
+    "lat": 18.152864,
+    "lng": -94.5424318
+  },
+  {
+    "title": "Bama San Martin",
+    "lat": 18.1485749,
+    "lng": -94.52535379999999
+  },
+  {
+    "title": "Bama Santa Fe",
+    "lat": 18.1567537,
+    "lng": -94.5460934
+  },
+  {
+    "title": "Bama Santa Isabel",
+    "lat": 18.1415178,
+    "lng": -94.4747314
+  },
+  {
+    "title": "Bama Santa Martha",
+    "lat": 18.1494446,
+    "lng": -94.54284080000001
+  },
+  {
+    "title": "Bama Sayula de Aleman",
+    "lat": 18.1450148,
+    "lng": -94.4256557
+  },
+  {
+    "title": "Bama Seguro",
+    "lat": 18.1388527,
+    "lng": -94.4345025
+  },
+  {
+    "title": "Bama Solis",
+    "lat": 18.1365571,
+    "lng": -94.4625968
+  },
+  {
+    "title": "Bama Teresa",
+    "lat": 18.1360558,
+    "lng": -94.50277299999999
+  },
+  {
+    "title": "Bama Terraplen",
+    "lat": 18.1234769,
+    "lng": -94.4578129
+  },
+  {
+    "title": "Bama Terraplen 02",
+    "lat": 18.1225584,
+    "lng": -94.44839789999999
+  },
+  {
+    "title": "Bama Tesoro",
+    "lat": 18.1400094,
+    "lng": -94.4901366
+  },
+  {
+    "title": "Bama Transistmica",
+    "lat": 18.1128597,
+    "lng": -94.4482269
+  },
+  {
+    "title": "Bama Verificentro",
+    "lat": 18.1345565,
+    "lng": -94.446337
+  },
+  {
+    "title": "Bama Zaragoza",
+    "lat": 18.1452841,
+    "lng": -94.42766230000001
+  },
+  {
+    "title": "Bama Express Agua Dulce Insurgentes",
+    "lat": 18.1419207,
+    "lng": -94.14875800000002
+  },
+  {
+    "title": "Bama Express Santa Rosa",
+    "lat": 18.1245405,
+    "lng": -94.47595319999999
+  },
+  {
+    "title": "Bama Express Choapas El Cielo",
+    "lat": 17.9138937,
+    "lng": -94.0976962
+  },
+  {
+    "title": "Bama Express Cuahutemoc",
+    "lat": 18.1290562,
+    "lng": -94.4616114
+  },
+  {
+    "title": "Bama Express Elvira",
+    "lat": 18.1093156,
+    "lng": -94.4451563
+  },
+  {
+    "title": "Bama Express Emiliano Zapata",
+    "lat": 18.117714,
+    "lng": -94.46257109999999
+  },
+  {
+    "title": "Bama Express Fco Villa 02",
+    "lat": 18.1227183,
+    "lng": -94.464044
+  },
+  {
+    "title": "Bama Express Fertimex",
+    "lat": 18.1118721,
+    "lng": -94.46284089999999
+  },
+  {
+    "title": "Bama Express Francisco Villa",
+    "lat": 18.1206829,
+    "lng": -94.46712
+  },
+  {
+    "title": "Bama Express Hnos del Trabajo",
+    "lat": 18.1406774,
+    "lng": -94.4166307
+  },
+  {
+    "title": "Bama Express Lopez Mateos",
+    "lat": 18.1191184,
+    "lng": -94.43438959999999
+  },
+  {
+    "title": "Bama Express Miguel Hidalgo",
+    "lat": 18.129925,
+    "lng": -94.46710720000002
+  },
+  {
+    "title": "Bama Express Palma Sola",
+    "lat": 18.1348489,
+    "lng": -94.43642229999999
+  },
+  {
+    "title": "Bama Express Santa Maria",
+    "lat": 18.1368921,
+    "lng": -94.51218519999999
+  },
+  {
+    "title": "Bama Express Santa Rosa",
+    "lat": 18.1297601,
+    "lng": -94.47400449999999
+  },
+  {
+    "title": "Bama Express Villas del Sur",
+    "lat": 18.1192593,
+    "lng": -94.4472062
+  }
+]

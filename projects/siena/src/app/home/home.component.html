@@ -5,10 +5,10 @@
   </nid-open-layers-core>
     -->
   <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true">
-    <ng-container nidMapLibreIsochroneLayer *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
-                  [locations]="locationsForIsochrones" (locationsLoaded)="isochronesLoaded = true"></ng-container>
-    <sin-oxxo-coverage *ngIf="isochronesLoaded" [ngxMapCore]="mapLibreMapCore"
-                       [proximityByWalkingTimeInSeconds]="240"></sin-oxxo-coverage>
+    <sin-oxxo-coverage *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
+                       [proximityByWalkingTimeInSeconds]="180"></sin-oxxo-coverage>
+    <sin-bama-coverage *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
+                       [proximityByWalkingTimeInSeconds]="180"></sin-bama-coverage>
     <ng-container nidMapLibreWeatherLayer *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
                   [dataset]="weatherDataset"></ng-container>
   </nid-maplibre-core>
