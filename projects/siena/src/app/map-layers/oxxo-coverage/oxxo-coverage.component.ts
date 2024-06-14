@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   IsochroneLocationArgs,
   NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES,
@@ -19,19 +19,21 @@ import {GeoJSONSourceSpecification, SourceSpecification} from '@maplibre/maplibr
   styleUrl: './oxxo-coverage.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OxxoCoverageComponent implements OnInit {
+export class OxxoCoverageComponent implements OnInit, OnDestroy {
 
   @Input() ngxMapCore: NgxMapLibreCoreComponent;
   @Input() proximityByWalkingTimeInSeconds = 60;
   @Input() coverageAreaColor = 'ff0000';
 
-  location: {stateId: string; municipalityId: string} = {
+  location: { stateId: string; municipalityId: string } = {
     stateId: '30', // Veracruz
     municipalityId: '039' // Coatzacoalcos
   }
 
   locationsForIsochrones: IsochroneLocationArgs[] = [];
 
+  private readonly sourceId = 'siena-oxxo-locations';
+  private readonly layerId = 'siena-oxxo-locations__layer';
   private subscription = new Subscription();
 
   constructor(private denueApiService: DENUEApiService) {
@@ -41,8 +43,14 @@ export class OxxoCoverageComponent implements OnInit {
     this.loadOxxoLocations();
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.ngxMapCore.mapCore.removeLayer(this.layerId);
+    this.ngxMapCore.mapCore.removeSource(this.sourceId);
+  }
+
   finishedLoadingAll() {
-    console.log('\x1B[46;30m Oxxos ready',);
+    // console.log('\x1B[46;30m Oxxos ready',);
   }
 
   private loadOxxoLocations() {
@@ -85,10 +93,10 @@ export class OxxoCoverageComponent implements OnInit {
       type: 'geojson',
       data
     }
-    this.ngxMapCore.mapCore.addSource('siena-oxxo-locations', source)
+    this.ngxMapCore.mapCore.addSource(this.sourceId, source)
     this.ngxMapCore.insertLayer({
-      id: 'siena-oxxo-locations__layer',
-      source: 'siena-oxxo-locations',
+      id: this.layerId,
+      source: this.sourceId,
       type: 'circle',
       paint: {
         'circle-radius': 5,

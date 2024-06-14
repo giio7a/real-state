@@ -50,17 +50,6 @@ export class HomeComponent implements OnInit {
     }]
   }
 
-  test() {
-    this.weatherDataset = 'gfs/temperature_2m_above_ground'
-    this.locationsForIsochrones = [{
-      location: {lat: 19.4326, lon: -99.1332},
-      costType: 'auto',
-      intervals: [{seconds: 300, color: '00ff00'},
-        {seconds: 600, color: '00ff00'},
-        {seconds: 900, color: '00ff00'}]
-    }, ...this.locationsForIsochrones]
-  }
-
   selectMapScene(scene: MapScene, drawer?: MatDrawer) {
     this.selectedMapScene = scene;
     drawer?.close();

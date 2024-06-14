@@ -51,11 +51,13 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   }
 
   override removeSelfLayer(): void {
-    // TODO Enrique: Implement
+    this.addedLayers.layers.forEach(layerId => this.ngxMapCore.mapCore.removeLayer(layerId))
+    this.addedLayers.sources.forEach(sourceId => this.ngxMapCore.mapCore.removeSource(sourceId))
   }
 
   private _locations: IsochroneLocationArgs[];
 
+  private addedLayers: { layers: string[], sources: string[] } = {layers: [], sources: []};
   private requestNotifier$ = new Subject<void>();
   private subscriptions = new Subscription()
 
@@ -91,7 +93,6 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
 
 
   private performDataRequest() {
-    // TODO Enrique: According to the docs, the Isochrones API can handle multiple locations at once
     return from(this.locations)
       .pipe(
         concatMap((locationArgs, index) =>
@@ -128,8 +129,9 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   }
 
   private insertLayer(sourceId: string) {
+    const layerId = `${sourceId}__layer`;
     this.ngxMapCore.insertLayer({
-      id: `${sourceId}__layer`,
+      id: layerId,
       type: 'fill',
       source: sourceId,
       layout: {},
@@ -138,5 +140,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
         'fill-opacity': ['get', 'fillOpacity'],
       }
     })
+    this.addedLayers.sources.push(sourceId);
+    this.addedLayers.layers.push(layerId);
   }
 }
