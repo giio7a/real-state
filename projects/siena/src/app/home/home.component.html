@@ -11,14 +11,16 @@
   </mat-drawer>
 
   <div class=" w-full h-full">
-    <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true"
-                       [ngSwitch]="selectedMapScene">
+    <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true">
+    </nid-maplibre-core>
+    <ng-container [ngSwitch]="selectedMapScene">
       <sin-weather-scene *ngSwitchCase="availableScenes.weather" [mapLibreMapCore]="mapLibreMapCore"/>
       <sin-oceans-scene *ngSwitchCase="availableScenes.oceans" [mapLibreMapCore]="mapLibreMapCore"/>
       <sin-air-quality-scene *ngSwitchCase="availableScenes.airQuality" [mapLibreMapCore]="mapLibreMapCore"/>
       <sin-oxxo-bama-coverage-scene *ngSwitchCase="availableScenes.oxxoBamaCoverage"
                                     [mapLibreMapCore]="mapLibreMapCore"/>
-    </nid-maplibre-core>
+
+    </ng-container>
   </div>
   <div class="absolute top-4 left-4 flex items-center">
     <button mat-icon-button aria-label="Button to open the configuration panel"

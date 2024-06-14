@@ -1,1 +1,9 @@
 <ng-container nidMapLibreWeatherLayer [ngxMapCore]="mapLibreMapCore" [dataset]="weatherDataset"></ng-container>
+
+<div class="absolute w-3/4 top-4 right-4 flex items-center">
+  <mat-chip-listbox [value]="weatherDataset" (change)="weatherDataset = $event.value">
+    @for (chip of options; track chip) {
+      <mat-chip-option [value]="chip">{{ ('weatherDatasets.' + chip) | translate }}</mat-chip-option>
+    }
+  </mat-chip-listbox>
+</div>
