@@ -1,9 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {
-  IsochroneLocationArgs,
-  NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES,
-  NgxMaplibreIsochroneLayerDirective
-} from '@nidiro/ngx-map-isochrone-layer';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {IsochroneLocationArgs, NgxMaplibreIsochroneLayerDirective} from '@nidiro/ngx-map-isochrone-layer';
 import {NgxMapLibreCoreComponent} from '@nidiro/ngx-map-core';
 import BAMA_LOCATIONS from '../../data/bama_locations.json'
 import {GeoJSONSourceSpecification, SourceSpecification} from "@maplibre/maplibre-gl-style-spec";
@@ -12,13 +8,13 @@ import {GeoJSONSourceSpecification, SourceSpecification} from "@maplibre/maplibr
   selector: 'sin-bama-coverage',
   standalone: true,
   imports: [
-    NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES as [typeof NgxMaplibreIsochroneLayerDirective],
+    NgxMaplibreIsochroneLayerDirective
   ],
   templateUrl: './bama-coverage.component.html',
   styleUrl: './bama-coverage.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BamaCoverageComponent implements OnInit {
+export class BamaCoverageComponent implements OnInit, OnDestroy {
 
   @Input() ngxMapCore: NgxMapLibreCoreComponent;
   @Input() proximityByWalkingTimeInSeconds = 60;
@@ -26,8 +22,16 @@ export class BamaCoverageComponent implements OnInit {
 
   locationsForIsochrones: IsochroneLocationArgs[] = [];
 
+  private readonly sourceId = 'siena-bama-locations';
+  private readonly layerId = 'siena-bama-locations__layer';
+
   ngOnInit() {
     this.loadBamaLocations();
+  }
+
+  ngOnDestroy() {
+    this.ngxMapCore.mapCore.removeLayer(this.layerId);
+    this.ngxMapCore.mapCore.removeSource(this.sourceId);
   }
 
   finishedLoadingAll() {
@@ -60,10 +64,10 @@ export class BamaCoverageComponent implements OnInit {
       type: 'geojson',
       data
     }
-    this.ngxMapCore.mapCore.addSource('siena-bama-locations', source)
+    this.ngxMapCore.mapCore.addSource(this.sourceId, source)
     this.ngxMapCore.insertLayer({
-      id: 'siena-bama-locations__layer',
-      source: 'siena-bama-locations',
+      id: this.layerId,
+      source: this.sourceId,
       type: 'circle',
       paint: {
         'circle-radius': 5,

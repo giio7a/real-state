@@ -1,18 +1,32 @@
-<div style="height: 100%; width: 100%;">
-  <!--
-  <nid-open-layers-core #mapCore [initialPosition]="initialPosition">
-    <ng-container nidOpenLayersWeatherLayer [ngxMapCore]="mapCore" [dataset]="weatherDataset"></ng-container>
-  </nid-open-layers-core>
-    -->
-  <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true">
-    <sin-oxxo-coverage *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
-                       [proximityByWalkingTimeInSeconds]="180"></sin-oxxo-coverage>
-    <sin-bama-coverage *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
-                       [proximityByWalkingTimeInSeconds]="180"></sin-bama-coverage>
-    <ng-container nidMapLibreWeatherLayer *ngIf="mapLoaded" [ngxMapCore]="mapLibreMapCore"
-                  [dataset]="weatherDataset"></ng-container>
-  </nid-maplibre-core>
-  <sin-map-side-panel (click)="test()"></sin-map-side-panel>
-</div>
+<mat-drawer-container class="w-full h-full">
+  <mat-drawer #drawer mode="over" opened class="p-5 bg-transparent">
+    @for (record of availableScenes|keyvalue; track record.key) {
+      <mat-card (click)="selectMapScene(record.value, drawer)" class="cursor-pointer mb-4">
+        <mat-card-header>
+          <mat-card-title>{{ ('scenes.' + record.value + '.title')| translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content><p>{{ ('scenes.' + record.value + '.description') | translate }}</p></mat-card-content>
+      </mat-card>
+    }
+  </mat-drawer>
 
-<!--TODO: IJ Issue https://youtrack.jetbrains.com/issue/WEB-61907 -->
+  <div class=" w-full h-full">
+    <nid-maplibre-core #mapLibreMapCore [initialPosition]="initialPosition" (mapLoad)="mapLoaded = true">
+    </nid-maplibre-core>
+    <ng-container [ngSwitch]="selectedMapScene">
+      <sin-weather-scene *ngSwitchCase="availableScenes.weather" [mapLibreMapCore]="mapLibreMapCore"/>
+      <sin-oceans-scene *ngSwitchCase="availableScenes.oceans" [mapLibreMapCore]="mapLibreMapCore"/>
+      <sin-air-quality-scene *ngSwitchCase="availableScenes.airQuality" [mapLibreMapCore]="mapLibreMapCore"/>
+      <sin-oxxo-bama-coverage-scene *ngSwitchCase="availableScenes.oxxoBamaCoverage"
+                                    [mapLibreMapCore]="mapLibreMapCore"/>
+
+    </ng-container>
+  </div>
+  <div class="absolute top-4 left-4 flex items-center">
+    <button mat-icon-button aria-label="Button to open the configuration panel"
+            (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img ngSrc="./assets/nidiro.webp" alt="nidiro" height="28.75" width="128" priority class="inline-block">
+  </div>
+</mat-drawer-container>
