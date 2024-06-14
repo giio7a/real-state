@@ -1,3 +1,21 @@
 {
-  "helloSiena": "Hello Siena!"
+  "helloSiena": "Hello Siena!",
+  "scenes": {
+    "weather": {
+      "title": "Weather",
+      "description": "Real-time information about wind, temperature, precipitation and more."
+    },
+    "oceans": {
+      "title": "Oceans",
+      "description": "Real-time information about waves, currents, tidal, etc."
+    },
+    "airQuality": {
+      "title": "Air Quality",
+      "description": "Real-time information about air particles such as CO and SO₂."
+    },
+    "oxxoBamaCoverage": {
+      "title": "Oxxo vs. Bama Coverage",
+      "description": "Compare how far stores are from people (5 minutes walking). "
+    }
+  }
 }

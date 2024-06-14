@@ -1,6 +1,14 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {InitialPosition} from '@nidiro/ngx-map-core'
 import {IsochroneLocationArgs} from '@nidiro/ngx-map-isochrone-layer';
+import {MatDrawer} from "@angular/material/sidenav";
+
+enum MapScene {
+  weather = 'weather',
+  oceans = 'oceans',
+  airQuality = 'airQuality',
+  oxxoBamaCoverage = 'oxxoBamaCoverage',
+}
 
 @Component({
   selector: 'sin-home',
@@ -9,6 +17,10 @@ import {IsochroneLocationArgs} from '@nidiro/ngx-map-isochrone-layer';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+  selectedMapScene: MapScene;
+
+  availableScenes = MapScene;
+
   /**
    * Veracruz
    */
@@ -19,7 +31,7 @@ export class HomeComponent implements OnInit {
   };
 
   locationsForIsochrones: IsochroneLocationArgs[] = [];
-  intervals: {seconds: number; color: string}[] = [
+  intervals: { seconds: number; color: string }[] = [
     {seconds: 300, color: 'ff0000'},
     {seconds: 600, color: 'ff0000'},
     {seconds: 900, color: 'ff0000'}
@@ -47,5 +59,10 @@ export class HomeComponent implements OnInit {
         {seconds: 600, color: '00ff00'},
         {seconds: 900, color: '00ff00'}]
     }, ...this.locationsForIsochrones]
+  }
+
+  selectMapScene(scene: MapScene, drawer?: MatDrawer) {
+    this.selectedMapScene = scene;
+    drawer?.close();
   }
 }

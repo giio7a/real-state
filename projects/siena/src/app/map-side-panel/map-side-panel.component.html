@@ -1,9 +1,0 @@
-<div *ngIf="isSidePanelOpen" class="absolute w-[300px] top-[50%] translate-y-[-50%] h-[99%] ml-[7px] bg-blue-400">
-  {{"helloSiena" | translate}}
-</div>
-<div class="absolute top-[56px] ml-[.5em] flex content-center text-white cursor-pointer" [ngClass]="isSidePanelOpen ? 'ml-[314px]' : 'ml-[7px]'" (click)="isSidePanelOpen = !isSidePanelOpen">
-  <mat-icon *ngIf="isSidePanelOpen" fontIcon="chevron_left"></mat-icon>
-  <img ngSrc="./assets/nidiro.webp" alt="nidiro" height="20" width="75">
-  <mat-icon *ngIf="!isSidePanelOpen" fontIcon="chevron_right"></mat-icon>
-</div>
-

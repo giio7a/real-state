@@ -1,38 +1,38 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {HomeRoutingModule} from './home-routing.module';
-import {
-  NGX_OPEN_LAYERS_CORE_DIRECTIVES,
-  NgxOpenLayersCoreComponent,
-  NgxMapLibreCoreComponent
-} from '@nidiro/ngx-map-core';
+import {NgxMapLibreCoreComponent} from '@nidiro/ngx-map-core';
 import {HomeComponent} from './home.component';
-import {
-  NGX_OPEN_LAYERS_WEATHER_DIRECTIVES,
-  NGX_MAPLIBRE_WEATHER_DIRECTIVES,
-  NgxOpenLayersWeatherDirective,
-  NgxMapLibreWeatherLayerDirective
-} from '@nidiro/ngx-map-weather-layer';
-import {NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES, NgxMaplibreIsochroneLayerDirective} from '@nidiro/ngx-map-isochrone-layer';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MapSidePanelModule} from '../map-side-panel/map-side-panel.module';
-import {OxxoCoverageComponent} from '../map-layers/oxxo-coverage/oxxo-coverage.component';
-import {BamaCoverageComponent} from "../map-layers/bama-coverage/bama-coverage.component";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {MatDrawer, MatDrawerContainer} from "@angular/material/sidenav";
+import {MatIcon} from "@angular/material/icon";
+import {MatCardModule} from "@angular/material/card";
+import {TranslateModule} from "@ngx-translate/core";
+import {OxxoBamaCoverageSceneComponent} from "../map-scenes/oxxo-bama-coverage/oxxo-bama-coverage-scene.component";
+import {WeatherSceneComponent} from "../map-scenes/weather/weather-scene.component";
+import {OceansSceneComponent} from "../map-scenes/oceans/oceans-scene.component";
+import {AirQualitySceneComponent} from "../map-scenes/air-quality/air-quality-scene.component";
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    BamaCoverageComponent,
-    OxxoCoverageComponent,
-    // TODO Enrique: These imports are not necessary, but where left here to show what might be needed
-    NGX_OPEN_LAYERS_CORE_DIRECTIVES as [typeof NgxOpenLayersCoreComponent, typeof NgxMapLibreCoreComponent],
-    NGX_OPEN_LAYERS_WEATHER_DIRECTIVES as [typeof NgxOpenLayersWeatherDirective],
-    NGX_MAPLIBRE_WEATHER_DIRECTIVES as [typeof NgxMapLibreWeatherLayerDirective],
-    NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES as [typeof NgxMaplibreIsochroneLayerDirective],
-    MatSlideToggleModule,
-    MapSidePanelModule
+    OxxoBamaCoverageSceneComponent,
+    WeatherSceneComponent,
+    OceansSceneComponent,
+    AirQualitySceneComponent,
+
+    NgxMapLibreCoreComponent,
+
+    MatButton,
+    MatDrawer,
+    MatDrawerContainer,
+    NgOptimizedImage,
+    MatIcon,
+    MatIconButton,
+    MatCardModule,
+    TranslateModule
   ]
 })
 export class HomeModule {
