@@ -19,7 +19,7 @@ export class NgxMapLibreWeatherLayerDirective extends BaseWeatherLayer<Map> impl
   }
 
   override removeSelfLayer() {
-    // TODO Enrique: Implement
+    this.ngxMapCore.mapCore.removeControl(this.deckInstance as unknown as IControl);
   }
 
   constructor(@Inject(NGX_WEATHER_LAYER_CONFIG) weatherLayerConfig: WeatherLayersConfigToken) {

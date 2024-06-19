@@ -20,7 +20,7 @@ import {
 export interface IsochroneLocationArgs {
   location: ValhallaLocation;
   costType: ValhallaCostingType;
-  intervals: {seconds: number; color: string}[];
+  intervals: { seconds: number; color: string }[];
 }
 
 @Directive({
@@ -51,11 +51,13 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   }
 
   override removeSelfLayer(): void {
-    // TODO Enrique: Implement
+    this.addedLayers.layers.forEach(layerId => this.ngxMapCore.mapCore.removeLayer(layerId))
+    this.addedLayers.sources.forEach(sourceId => this.ngxMapCore.mapCore.removeSource(sourceId))
   }
 
   private _locations: IsochroneLocationArgs[];
 
+  private addedLayers: { layers: string[], sources: string[] } = {layers: [], sources: []};
   private requestNotifier$ = new Subject<void>();
   private subscriptions = new Subscription()
 
@@ -65,7 +67,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
    * {@link https://github.com/valhalla/valhalla/discussions/3373#discussioncomment-1644713 Rate limit}.
    * @private
    */
-  private readonly TIME_BETWEEN_REQUESTS = 500;
+  private readonly TIME_BETWEEN_REQUESTS = 0;
   private readonly TIME_TO_DEBOUNCE_LOCATIONS_CHANGE = 500;
 
   constructor(@Inject(VALHALLA_API_CONFIG) valhallaConfig: ValhallaApiConfigToken,
@@ -91,7 +93,6 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
 
 
   private performDataRequest() {
-    // TODO Enrique: According to the docs, the Isochrones API can handle multiple locations at once
     return from(this.locations)
       .pipe(
         concatMap((locationArgs, index) =>
@@ -118,7 +119,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
                   this.insertLayer(sourceId);
                 }
               }),
-              switchMap(response => iif(() => index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
+              switchMap(response => iif(() => !!this.TIME_BETWEEN_REQUESTS && index < this.locations.length - 1, of(response).pipe(delay(this.TIME_BETWEEN_REQUESTS)), of(response)))
             )
         ),
         finalize(() => {
@@ -128,8 +129,9 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
   }
 
   private insertLayer(sourceId: string) {
+    const layerId = `${sourceId}__layer`;
     this.ngxMapCore.insertLayer({
-      id: `${sourceId}__layer`,
+      id: layerId,
       type: 'fill',
       source: sourceId,
       layout: {},
@@ -138,5 +140,7 @@ export class NgxMaplibreIsochroneLayerDirective extends NgxMapLayer<Map> impleme
         'fill-opacity': ['get', 'fillOpacity'],
       }
     })
+    this.addedLayers.sources.push(sourceId);
+    this.addedLayers.layers.push(layerId);
   }
 }
