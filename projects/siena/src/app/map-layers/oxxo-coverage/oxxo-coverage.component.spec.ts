@@ -8,9 +8,8 @@ describe('OxxoCoverageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OxxoCoverageComponent]
-    })
-      .compileComponents();
+      imports: [OxxoCoverageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OxxoCoverageComponent);
     component = fixture.componentInstance;

@@ -7,18 +7,18 @@ import {VALHALLA_API_CLIENT, VALHALLA_API_CONFIG, ValhallaApiConfigToken} from '
 import {HttpClient, provideHttpClient} from '@angular/common/http';
 import {Valhalla} from '@routingjs/valhalla';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {NGX_WEATHER_LAYER_CONFIG, WeatherLayersConfigToken} from "@nidiro/ngx-map-weather-layer";
-import {environment} from "../environments/environment";
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {NGX_WEATHER_LAYER_CONFIG, WeatherLayersConfigToken} from '@nidiro/ngx-map-weather-layer';
+import {environment} from '../environments/environment';
 
 const valhallaConfig: ValhallaApiConfigToken = {
-  apiKey: 'XXXX' // TODO Enrique: Obtain
-}
+  apiKey: 'XXXX', // TODO Enrique: Obtain
+};
 
 const weatherLayersConfig: WeatherLayersConfigToken = {
   debug: true,
-  weatherLayersAccessToken: environment.weatherLayersToken
-}
+  weatherLayersAccessToken: environment.weatherLayersToken,
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,9 +26,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     {provide: VALHALLA_API_CONFIG, useValue: valhallaConfig},
     {
-      provide: VALHALLA_API_CLIENT, useValue: new Valhalla({
+      provide: VALHALLA_API_CLIENT,
+      useValue: new Valhalla({
         baseUrl: 'http://localhost:4200/valhalla', // TODO Enrique: Depend on environment?
-      })
+      }),
     }, // TODO Enrique: We can make the ValhallaClient to be singleton and manage the requests sequentially
     {provide: NGX_WEATHER_LAYER_CONFIG, useValue: weatherLayersConfig},
     provideHttpClient(),
@@ -40,9 +41,9 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
         useDefaultLang: true,
-      })
+      }),
     ),
-  ]
+  ],
 };
 
 function CustomHttpLoaderFactory(http: HttpClient) {

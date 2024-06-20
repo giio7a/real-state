@@ -5,14 +5,13 @@ import OXXO_DATA from './oxxo.dummy.json';
 import {environment} from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DENUEApiService {
   private readonly DENUE_URL = 'https://www.inegi.org.mx/app/api/denue/v1';
-  private readonly DENUE_TOKEN = environment.denueApiToken
+  private readonly DENUE_TOKEN = environment.denueApiToken;
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   /**
    * TODO: {@link https://github.com/nidiro/codename-siena/issues/16}
@@ -20,7 +19,10 @@ export class DENUEApiService {
    */
   buscarAreaAct(params: IDENUESearchRequestParams): Observable<DENUESearchResponseItem[]> {
     const validParams = new DENUESearchRequestParams(params);
-    console.log('\x1B[46;30m Simulating: ', `${this.DENUE_URL}/consulta/BuscarAreaAct/${validParams.stateId}/${validParams.municipalityId}/${validParams.localityId}/${validParams.agebId}/${validParams.blockId}/${validParams.sectorId}/${validParams.subSectorId}/${validParams.branchId}/${validParams.classId}/${validParams.name}/${validParams.initialRecord}/${validParams.lastRecord}/${validParams.id}/${this.DENUE_TOKEN}`);
+    console.log(
+      '\x1B[46;30m Simulating: ',
+      `${this.DENUE_URL}/consulta/BuscarAreaAct/${validParams.stateId}/${validParams.municipalityId}/${validParams.localityId}/${validParams.agebId}/${validParams.blockId}/${validParams.sectorId}/${validParams.subSectorId}/${validParams.branchId}/${validParams.classId}/${validParams.name}/${validParams.initialRecord}/${validParams.lastRecord}/${validParams.id}/${this.DENUE_TOKEN}`,
+    );
     return of(OXXO_DATA);
     // return this.httpClient.get<DENUESearchResponseItem[]>(`${this.DENUE_URL}/consulta/BuscarAreaAct/${validParams.stateId}/${validParams.municipalityId}/${validParams.localityId}/${validParams.agebId}/${validParams.blockId}/${validParams.sectorId}/${validParams.subSectorId}/${validParams.branchId}/${validParams.classId}/${validParams.name}/${validParams.initialRecord}/${validParams.lastRecord}/${validParams.id}/${this.DENUE_TOKEN}`, {
     //   headers: {
@@ -86,8 +88,7 @@ interface IDENUESearchRequestParams {
 }
 
 class DENUESearchRequestParams {
-  constructor(private params: IDENUESearchRequestParams) {
-  }
+  constructor(private params: IDENUESearchRequestParams) {}
 
   get stateId() {
     return this.params.stateId || '00';
@@ -102,109 +103,109 @@ class DENUESearchRequestParams {
   }
 
   get agebId() {
-    return this.params.agebId || '0'
+    return this.params.agebId || '0';
   }
 
   get blockId() {
-    return this.params.blockId || '0'
+    return this.params.blockId || '0';
   }
 
   get sectorId() {
-    return this.params.sectorId || '0'
+    return this.params.sectorId || '0';
   }
 
   get subSectorId() {
-    return this.params.subSectorId || '0'
+    return this.params.subSectorId || '0';
   }
 
   get branchId() {
-    return this.params.branchId || '0'
+    return this.params.branchId || '0';
   }
 
   get classId() {
-    return this.params.classId || '0'
+    return this.params.classId || '0';
   }
 
   get name() {
-    return this.params.name || '0'
+    return this.params.name || '0';
   }
 
   get initialRecord() {
-    return this.params.initialRecord || '1'
+    return this.params.initialRecord || '1';
   }
 
   get lastRecord() {
-    return this.params.lastRecord || '10'
+    return this.params.lastRecord || '10';
   }
 
   get id() {
-    return this.params.id || '0'
+    return this.params.id || '0';
   }
 }
 
 export interface DENUESearchResponseItem {
   // Campo 1: Clave CLEE
-  CLEE: string,
+  CLEE: string;
   // Campo 2: Id de establecimiento
-  Id: string,
+  Id: string;
   // Campo 3: Nombre del establecimiento
-  Nombre: string,
+  Nombre: string;
   // Campo 4: Razón social
-  Razon_social: string,
+  Razon_social: string;
   // Campo 5: Clase de la actividad económica
-  Clase_actividad: string,
+  Clase_actividad: string;
   // Campo 6: Estrato (Personal ocupado)
-  Estrato: string,
+  Estrato: string;
   // Campo 7: Tipo de la vialidad
-  Tipo_vialidad: string,
+  Tipo_vialidad: string;
   // Campo 8: Calle
-  Calle: string,
+  Calle: string;
   // Campo 9: Número exterior
-  Num_Exterior: string,
+  Num_Exterior: string;
   // Campo 10: Número interior
-  Num_Interior: string,
+  Num_Interior: string;
   // Campo 11: Colonia
-  Colonia: string,
+  Colonia: string;
   // Campo 12: Código postal
-  CP: string,
+  CP: string;
   // Campo 13: Localidad, municipio y entidad federativa
-  Ubicacion: string,
+  Ubicacion: string;
   // Campo 14: Teléfono
-  Telefono: string,
+  Telefono: string;
   // Campo 15: Correo electrónico
-  Correo_e: string,
+  Correo_e: string;
   // Campo 16: Página de internet
-  Sitio_internet: string,
+  Sitio_internet: string;
   // Campo 17: Tipo de establecimiento
-  Tipo: string,
+  Tipo: string;
   // Campo 18: Longitud
-  Longitud: string,
+  Longitud: string;
   // Campo 19: Latitud
-  Latitud: string,
+  Latitud: string;
   // Campo 20: Tipo de corredor industrial
-  tipo_corredor_industrial: string,
+  tipo_corredor_industrial: string;
   // Campo 21: Nombre del corredor industrial
-  nom_corredor_industrial: string,
+  nom_corredor_industrial: string;
   // Campo 22: Número de local
-  numero_local: string,
+  numero_local: string;
   // Campo 23: AGEB
-  AGEB: string,
+  AGEB: string;
   // Campo 24: Manzana
-  Manzana: string,
+  Manzana: string;
   // Campo 25: Edificio
-  EDIFICIO: string,
+  EDIFICIO: string;
   // Campo 26: Id clase de la actividad económica
-  CLASE_ACTIVIDAD_ID: string,
+  CLASE_ACTIVIDAD_ID: string;
   // Campo 27: Id sector de la actividad económica
-  SECTOR_ACTIVIDAD_ID: string,
+  SECTOR_ACTIVIDAD_ID: string;
   // Campo 28: Id subsector de la actividad económica
-  SUBSECTOR_ACTIVIDAD_ID: string,
+  SUBSECTOR_ACTIVIDAD_ID: string;
   // Campo 29: Id rama de la actividad económica
-  RAMA_ACTIVIDAD_ID: string,
+  RAMA_ACTIVIDAD_ID: string;
   // The Tipo_Asentamiento field
-  Tipo_Asentamiento: string,
+  Tipo_Asentamiento: string;
   // The Fecha_Alta field
-  Fecha_Alta: string,
+  Fecha_Alta: string;
   // The AreaGeo field
-  AreaGeo: string
+  AreaGeo: string;
 }

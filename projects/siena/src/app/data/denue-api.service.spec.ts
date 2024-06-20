@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { DENUEApiService } from './denua-api.service';
+import {DENUEApiService} from './denua-api.service';
 
 describe('DenuaApiService', () => {
   let service: DENUEApiService;
