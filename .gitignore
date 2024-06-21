@@ -43,3 +43,7 @@ Thumbs.db
 
 # Siena
 /projects/siena/src/environments/environment.local.ts
+
+.nx/cache
+.nx/workspace-data
+.husky/

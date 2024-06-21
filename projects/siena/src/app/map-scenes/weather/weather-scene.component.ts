@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {NgxMapLibreWeatherLayerDirective} from '@nidiro/ngx-map-weather-layer'
+import {NgxMapLibreWeatherLayerDirective} from '@nidiro/ngx-map-weather-layer';
 import {NgxMapLibreCoreComponent} from '@nidiro/ngx-map-core';
 import {MatChipsModule} from '@angular/material/chips';
 import {TranslateModule} from '@ngx-translate/core';
@@ -7,14 +7,10 @@ import {TranslateModule} from '@ngx-translate/core';
 @Component({
   selector: 'sin-weather-scene',
   standalone: true,
-  imports: [
-    NgxMapLibreWeatherLayerDirective,
-    MatChipsModule,
-    TranslateModule,
-  ],
+  imports: [NgxMapLibreWeatherLayerDirective, MatChipsModule, TranslateModule],
   templateUrl: './weather-scene.component.html',
   styleUrl: './weather-scene.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeatherSceneComponent {
   @Input() mapLibreMapCore: NgxMapLibreCoreComponent;
@@ -39,6 +35,6 @@ export class WeatherSceneComponent {
     'gfs/reflectivity_1000m_above_ground',
     'gfs/downward_short_wave_radiation_flux_surface',
     'gfs/convective_available_potential_energy_surface',
-  ]
+  ];
   weatherDataset = this.options[0];
 }

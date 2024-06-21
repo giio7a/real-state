@@ -162,6 +162,15 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/siena/**/*.ts",
+              "projects/siena/**/*.html"
+            ]
+          }
         }
       }
     },

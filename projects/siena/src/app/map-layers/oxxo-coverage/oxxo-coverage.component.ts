@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@ang
 import {
   IsochroneLocationArgs,
   NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES,
-  NgxMaplibreIsochroneLayerDirective
+  NgxMaplibreIsochroneLayerDirective,
 } from '@nidiro/ngx-map-isochrone-layer';
 import {NgxMapLibreCoreComponent} from '@nidiro/ngx-map-core';
 import {DENUEApiService, DENUESearchResponseItem} from '../../data/denue-api.service';
@@ -12,23 +12,20 @@ import {GeoJSONSourceSpecification, SourceSpecification} from '@maplibre/maplibr
 @Component({
   selector: 'sin-oxxo-coverage',
   standalone: true,
-  imports: [
-    NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES as [typeof NgxMaplibreIsochroneLayerDirective],
-  ],
+  imports: [NGX_MAPLIBRE_ISOCHRONE_DIRECTIVES as [typeof NgxMaplibreIsochroneLayerDirective]],
   templateUrl: './oxxo-coverage.component.html',
   styleUrl: './oxxo-coverage.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OxxoCoverageComponent implements OnInit, OnDestroy {
-
   @Input() ngxMapCore: NgxMapLibreCoreComponent;
   @Input() proximityByWalkingTimeInSeconds = 60;
   @Input() coverageAreaColor = 'ff0000';
 
-  location: { stateId: string; municipalityId: string } = {
+  location: {stateId: string; municipalityId: string} = {
     stateId: '30', // Veracruz
-    municipalityId: '039' // Coatzacoalcos
-  }
+    municipalityId: '039', // Coatzacoalcos
+  };
 
   locationsForIsochrones: IsochroneLocationArgs[] = [];
 
@@ -36,8 +33,7 @@ export class OxxoCoverageComponent implements OnInit, OnDestroy {
   private readonly layerId = 'siena-oxxo-locations__layer';
   private subscription = new Subscription();
 
-  constructor(private denueApiService: DENUEApiService) {
-  }
+  constructor(private denueApiService: DENUEApiService) {}
 
   ngOnInit() {
     this.loadOxxoLocations();
@@ -54,29 +50,31 @@ export class OxxoCoverageComponent implements OnInit, OnDestroy {
   }
 
   private loadOxxoLocations() {
-    const subscription = this.denueApiService.buscarAreaAct({
-      stateId: this.location.stateId,
-      municipalityId: this.location.municipalityId,
-      classId: '462112',
-      name: 'OXXO',
-      initialRecord: 1,
-      lastRecord: 50
-    }).subscribe((response) => {
-      this.renderOxxoLocations(response);
-      this.renderOxxoCoverage(response);
-    });
+    const subscription = this.denueApiService
+      .buscarAreaAct({
+        stateId: this.location.stateId,
+        municipalityId: this.location.municipalityId,
+        classId: '462112',
+        name: 'OXXO',
+        initialRecord: 1,
+        lastRecord: 50,
+      })
+      .subscribe((response) => {
+        this.renderOxxoLocations(response);
+        this.renderOxxoCoverage(response);
+      });
     this.subscription.add(subscription);
   }
 
   private renderOxxoLocations(oxxoLocations: DENUESearchResponseItem[]) {
     const data: GeoJSONSourceSpecification['data'] = {
       type: 'FeatureCollection',
-      features: oxxoLocations.map(location => {
+      features: oxxoLocations.map((location) => {
         return {
-          type: 'Feature' as 'Feature',
+          type: 'Feature',
           geometry: {
-            type: 'Point' as 'Point',
-            coordinates: [+location.Longitud, +location.Latitud]
+            type: 'Point',
+            coordinates: [+location.Longitud, +location.Latitud],
           },
           properties: {
             name: location.Nombre,
@@ -84,25 +82,24 @@ export class OxxoCoverageComponent implements OnInit, OnDestroy {
             // postalCode: location.CodigoPostal,
             phone: location.Telefono,
             // id: location.id
-          }
-        }
-      })
-
-    }
+          },
+        };
+      }),
+    };
     const source: SourceSpecification = {
       type: 'geojson',
-      data
-    }
-    this.ngxMapCore.mapCore.addSource(this.sourceId, source)
+      data,
+    };
+    this.ngxMapCore.mapCore.addSource(this.sourceId, source);
     this.ngxMapCore.insertLayer({
       id: this.layerId,
       source: this.sourceId,
       type: 'circle',
       paint: {
         'circle-radius': 5,
-        'circle-color': `#${this.coverageAreaColor}`
-      }
-    })
+        'circle-color': `#${this.coverageAreaColor}`,
+      },
+    });
   }
 
   private renderOxxoCoverage(oxxoLocations: DENUESearchResponseItem[]) {
@@ -110,13 +107,8 @@ export class OxxoCoverageComponent implements OnInit, OnDestroy {
       return {
         location: {lat: +location.Latitud, lon: +location.Longitud},
         costType: 'pedestrian',
-        intervals: [
-          {seconds: this.proximityByWalkingTimeInSeconds, color: this.coverageAreaColor},
-        ]
-      }
-    })
-
+        intervals: [{seconds: this.proximityByWalkingTimeInSeconds, color: this.coverageAreaColor}],
+      };
+    });
   }
-
-
 }

@@ -10,13 +10,14 @@ import {MapLibreCoreSettings} from './maplibre-core.settings';
   imports: [MapComponent],
   templateUrl: './ngx-maplibre-core.component.html',
   styleUrl: './ngx-maplibre-core.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements INgxMapCore<Map>, OnInit {
   @Input() set initialMapOptions(value: MapOptions) {
     this._initialOptions.zoom = value.zoom || 0;
-    this._initialOptions.center = value.center || [0, 0]
+    this._initialOptions.center = value.center || [0, 0];
   }
+  //
 
   @Output() mapLoad = new EventEmitter<Map>();
 
@@ -24,19 +25,21 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
 
   private _initialOptions: MapOptions = {
     container: null,
-    style: ''
-  }
+    style: '',
+  };
 
   get initialMapOptions() {
-    return this._initialOptions
+    return this._initialOptions;
   }
 
   get zoom() {
-    return this.initialPosition ? this.initialPosition.zoom : this.initialMapOptions.zoom || 0
+    return this.initialPosition ? this.initialPosition.zoom : this.initialMapOptions.zoom || 0;
   }
 
   get center() {
-    return this.initialPosition ? [this.initialPosition.longitude, this.initialPosition.latitude] as [number, number] : this.initialMapOptions.center
+    return this.initialPosition
+      ? ([this.initialPosition.longitude, this.initialPosition.latitude] as [number, number])
+      : this.initialMapOptions.center;
   }
 
   override ngOnInit() {
@@ -49,10 +52,10 @@ export class NgxMapLibreCoreComponent extends NgxMapCoreCommon<Map> implements I
 
   override insertLayer(layer: LayerSpecification) {
     if (this.mapCore.getLayer(layer.id)) {
-      console.log('\x1B[46;30m  Layer already exists in MapLibre core',); // TODO Enrique: Conditional to config.debug
+      console.log('\x1B[46;30m  Layer already exists in MapLibre core'); // TODO Enrique: Conditional to config.debug
       return;
     }
-    this.mapCore.addLayer(layer)
+    this.mapCore.addLayer(layer);
   }
 
   mapLibreLoaded(map: Map) {

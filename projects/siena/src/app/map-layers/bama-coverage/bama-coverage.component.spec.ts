@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BamaCoverageComponent } from './bama-coverage.component';
+import {BamaCoverageComponent} from './bama-coverage.component';
 
 describe('BamaCoverageComponent', () => {
   let component: BamaCoverageComponent;
@@ -8,10 +8,9 @@ describe('BamaCoverageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BamaCoverageComponent]
-    })
-    .compileComponents();
-    
+      imports: [BamaCoverageComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(BamaCoverageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
