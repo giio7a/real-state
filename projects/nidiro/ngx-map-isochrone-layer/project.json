@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "@nidiro/ngx-map-isochrone-layer",
+  "projectType": "library",
+  "sourceRoot": "projects/nidiro/ngx-map-isochrone-layer/src",
+  "prefix": "nid",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "projects/nidiro/ngx-map-isochrone-layer/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "projects/nidiro/ngx-map-isochrone-layer/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "projects/nidiro/ngx-map-isochrone-layer/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{workspaceRoot}/dist/@nidiro/ngx-map-isochrone-layer"
+      ]
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "projects/nidiro/ngx-map-isochrone-layer/tsconfig.spec.json",
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ]
+      }
+    }
+  }
+}

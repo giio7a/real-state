@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "@nidiro/ngx-map-weather-layer",
+  "projectType": "library",
+  "sourceRoot": "projects/nidiro/ngx-map-weather-layer/src",
+  "prefix": "nid",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "projects/nidiro/ngx-map-weather-layer/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "projects/nidiro/ngx-map-weather-layer/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "projects/nidiro/ngx-map-weather-layer/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": [
+        "{workspaceRoot}/dist/@nidiro/ngx-map-weather-layer"
+      ]
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "tsConfig": "projects/nidiro/ngx-map-weather-layer/tsconfig.spec.json",
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ]
+      }
+    }
+  }
+}

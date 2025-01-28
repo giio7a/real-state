@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "node ./node_modules/@angular/cli/bin/ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint",
+    "start": "nx serve",
+    "build": "nx build",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test",
+    "lint": "nx lint",
     "prepare": "rm -rf ./.husky && husky install && echo \"cd projects/siena/ && npm run precommit\" > .husky/pre-commit",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "start-srp": "nx serve siena-report-public --port=4201"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +39,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.2",
+    "@angular-devkit/core": "^17.3.2",
+    "@angular-devkit/schematics": "^17.3.2",
     "@angular-eslint/builder": "17.4.1",
     "@angular-eslint/eslint-plugin": "17.4.1",
     "@angular-eslint/eslint-plugin-template": "17.4.1",
@@ -45,6 +48,9 @@
     "@angular-eslint/template-parser": "17.4.1",
     "@angular/cli": "^17.3.2",
     "@angular/compiler-cli": "^17.3.0",
+    "@nx/angular": "20.4.0",
+    "@nx/workspace": "20.4.0",
+    "@schematics/angular": "^17.3.2",
     "@tweakpane/core": "^2.0.3",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "7.8.0",
@@ -63,6 +69,7 @@
     "lint-staged": "^15.2.7",
     "ng-lint-staged": "^12.0.4",
     "ng-packagr": "^17.3.0",
+    "nx": "20.4.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
