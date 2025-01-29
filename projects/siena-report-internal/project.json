@@ -1,0 +1,83 @@
+{
+  "name": "siena-report-internal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "projects/siena-report-internal/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/projects/siena-report-internal",
+        "index": "projects/siena-report-internal/src/index.html",
+        "browser": "projects/siena-report-internal/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "projects/siena-report-internal/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["projects/siena-report-internal/src/favicon.ico", "projects/siena-report-internal/src/assets"],
+        "styles": ["projects/siena-report-internal/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "siena-report-internal:build:production"
+        },
+        "development": {
+          "buildTarget": "siena-report-internal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "siena-report-internal:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "projects/siena-report-internal/**/*.ts",
+          "projects/siena-report-internal/**/*.html"
+        ]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "siena-report-internal:build",
+        "staticFilePath": "dist/projects/siena-report-internal/browser",
+        "spa": true
+      }
+    }
+  }
+}

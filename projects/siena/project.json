@@ -112,7 +112,7 @@
       }
     },
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "projects/siena/**/*.ts",

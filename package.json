@@ -8,9 +8,10 @@
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
     "lint": "nx lint",
-    "prepare": "rm -rf ./.husky && husky install && echo \"cd projects/siena/ && npm run precommit\" > .husky/pre-commit",
+    "prepare": "rm -rf ./.husky && husky install && echo \"npm run precommit\" > .husky/pre-commit",
     "precommit": "lint-staged",
-    "start-srp": "nx serve siena-report-public --port=4201"
+    "start-srp": "nx serve siena-report-public --port=4201",
+    "start-sri": "nx serve siena-report-internal --port=4202"
   },
   "private": true,
   "dependencies": {
@@ -49,8 +50,13 @@
     "@angular/cli": "^17.3.2",
     "@angular/compiler-cli": "^17.3.0",
     "@nx/angular": "20.4.0",
+    "@nx/js": "20.4.0",
+    "@nx/web": "20.4.0",
     "@nx/workspace": "20.4.0",
     "@schematics/angular": "^17.3.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
     "@tweakpane/core": "^2.0.3",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "7.8.0",
@@ -79,7 +85,7 @@
   "lint-staged": {
     "*.ts": [
       "prettier --write",
-      "ng-lint-staged lint --fix --"
+      "nx affected --target=lint"
     ],
     "*.{html,css,scss}": [
       "prettier --write"

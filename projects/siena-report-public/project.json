@@ -72,6 +72,15 @@
         "buildTarget": "siena-report-public:build"
       }
     },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "projects/siena-report-public/**/*.ts",
+          "projects/siena-report-public/**/*.html"
+        ]
+      }
+    },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {

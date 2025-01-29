@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "sin",
+            "prefix": "sri",
             "style": "camelCase"
           }
         ],
@@ -17,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "sin",
+            "prefix": "sri",
             "style": "kebab-case"
           }
         ],
