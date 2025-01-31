@@ -2,7 +2,7 @@
   "name": "siena-report-internal",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "app",
+  "prefix": "sri",
   "sourceRoot": "projects/siena-report-internal/src",
   "tags": [],
   "targets": {

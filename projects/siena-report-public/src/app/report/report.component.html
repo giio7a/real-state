@@ -1,0 +1,40 @@
+<div class="m-4 grid grid-cols-1 md:grid-cols-12">
+  <p-card class="md:col-span-6 md:col-start-4" header="Reporte ciudadano">
+    <!-- TODO: Add reactive form -->
+    <form>
+      <div class="mb-8">
+        <p-floatLabel>
+          <input pInputText id="title" class="w-full" />
+          <label for="title">Título</label>
+        </p-floatLabel>
+      </div>
+      <div class="mb-8">
+        <p-floatLabel>
+          <textarea pInputTextarea id="description" class="w-full" rows="5" cols="30" [autoResize]="true"> </textarea>
+          <label for="description">Description</label>
+        </p-floatLabel>
+      </div>
+      <div class="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="mb-5 md:mb-0">
+          <p-floatLabel>
+            <!-- TODO: Move and check options -->
+            <p-dropdown id="type" class="w-full" [options]="['Bache', 'Luminaria', 'Otro']" />
+            <label for="type">Tipo de reporte</label>
+          </p-floatLabel>
+        </div>
+        <div class="mb-5 md:mb-0">
+          <p-floatLabel>
+            <input pInputTextarea id="date" class="w-full" type="datetime-local" [value]="today" />
+            <label for="date">Fecha del suceso:</label>
+          </p-floatLabel>
+        </div>
+      </div>
+      <!-- TODO: Add map -->
+      <div class="w-full h-72 bg-gray-200">Map Space</div>
+      <div class="flex flex-row-reverse">
+        <!-- TODO: Save data -->
+        <button pButton pRipple type="submit" class="p-button-success mt-5">Enviar</button>
+      </div>
+    </form>
+  </p-card>
+</div>

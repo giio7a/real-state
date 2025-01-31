@@ -8,7 +8,7 @@
     }
   },
   "sourceRoot": "projects/siena-report-public/src",
-  "prefix": "app",
+  "prefix": "srp",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -26,6 +26,8 @@
           "projects/siena-report-public/src/assets"
         ],
         "styles": [
+          "primeng/resources/themes/bootstrap4-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
           "projects/siena-report-public/src/styles.scss"
         ],
         "scripts": []
@@ -95,6 +97,8 @@
           "projects/siena-report-public/src/assets"
         ],
         "styles": [
+          "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
           "projects/siena-report-public/src/styles.scss"
         ],
         "scripts": []
