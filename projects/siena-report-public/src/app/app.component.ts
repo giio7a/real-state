@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import {PrimeNGConfig} from 'primeng/api';
 
 @Component({
   selector: 'srp-root',
@@ -8,6 +9,11 @@ import {RouterOutlet} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'siena-report-public';
+  constructor(private primengConfig: PrimeNGConfig) {}
+
+  ngOnInit() {
+    this.primengConfig.ripple = true;
+  }
 }
