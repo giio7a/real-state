@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="@nidiro/ngx-map-isochrone-layer" type="js.build_tools.npm">
+  <configuration default="false" name="siena_report_public" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="watch-isochrone-layer" />
+      <script value="start-srp" />
     </scripts>
     <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.18.0/bin/node" />
     <envs />

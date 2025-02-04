@@ -3,13 +3,18 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "node ./node_modules/@angular/cli/bin/ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint",
-    "prepare": "rm -rf ./.husky && husky install && echo \"cd projects/siena/ && npm run precommit\" > .husky/pre-commit",
-    "precommit": "lint-staged"
+    "start": "nx serve siena",
+    "build": "nx build siena",
+    "watch": "nx build siena --watch --configuration development",
+    "test": "nx test siena",
+    "lint": "nx lint siena",
+    "watch-map-core": "nx run ngx-map-core:build --watch",
+    "watch-isochrone-layer": "nx run ngx-map-isochrone-layer:build --watch",
+    "watch-weather-layer": "nx run ngx-map-weather-layer:build --watch",
+    "prepare": "rm -rf ./.husky && husky install && echo \"npm run precommit\" > .husky/pre-commit",
+    "precommit": "lint-staged",
+    "start-srp": "nx serve siena-report-public --port=4201",
+    "start-sri": "nx serve siena-report-internal --port=4202"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +35,7 @@
     "@routingjs/valhalla": "^0.2.0",
     "maplibre-gl": "^4.1.3",
     "ol": "^9.1.0",
+    "primeng": "^17.18.15",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "tweakpane": "4.0.3",
@@ -38,6 +44,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.2",
+    "@angular-devkit/core": "^17.3.2",
+    "@angular-devkit/schematics": "^17.3.2",
     "@angular-eslint/builder": "17.4.1",
     "@angular-eslint/eslint-plugin": "17.4.1",
     "@angular-eslint/eslint-plugin-template": "17.4.1",
@@ -45,6 +53,14 @@
     "@angular-eslint/template-parser": "17.4.1",
     "@angular/cli": "^17.3.2",
     "@angular/compiler-cli": "^17.3.0",
+    "@nx/angular": "20.4.0",
+    "@nx/js": "20.4.0",
+    "@nx/web": "20.4.0",
+    "@nx/workspace": "20.4.0",
+    "@schematics/angular": "^17.3.2",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
     "@tweakpane/core": "^2.0.3",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "7.8.0",
@@ -63,6 +79,7 @@
     "lint-staged": "^15.2.7",
     "ng-lint-staged": "^12.0.4",
     "ng-packagr": "^17.3.0",
+    "nx": "20.4.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
@@ -72,7 +89,7 @@
   "lint-staged": {
     "*.ts": [
       "prettier --write",
-      "ng-lint-staged lint --fix --"
+      "nx affected --target=lint"
     ],
     "*.{html,css,scss}": [
       "prettier --write"

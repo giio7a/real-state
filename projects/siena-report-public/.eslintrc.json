@@ -1,15 +1,19 @@
 {
   "extends": "../../.eslintrc.json",
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": [
+    "!**/*"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
           {
             "type": "attribute",
-            "prefix": "sin",
+            "prefix": "srp",
             "style": "camelCase"
           }
         ],
@@ -17,15 +21,19 @@
           "error",
           {
             "type": "element",
-            "prefix": "sin",
+            "prefix": "srp",
             "style": "kebab-case"
           }
         ],
-        "@angular-eslint/use-lifecycle-interface": ["error"]
+        "@angular-eslint/use-lifecycle-interface": [
+          "error"
+        ]
       }
     },
     {
-      "files": ["*.html"],
+      "files": [
+        "*.html"
+      ],
       "rules": {}
     }
   ]

@@ -1,6 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/@nidiro/ngx-map-weather-layer",
+  "dest": "../../../dist/@nidiro/ngx-map-weather-layer/src/public-api.ts",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

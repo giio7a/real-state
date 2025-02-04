@@ -4,6 +4,8 @@ import {fromLonLat} from 'ol/proj';
 import {INgxMapCore, NgxMapCoreCommon} from '../architecture/ngx-map-core';
 import {ViewOptions} from 'ol/View';
 import {Layer} from 'ol/layer';
+import TileLayer from 'ol/layer/Tile';
+import {OSM} from 'ol/source';
 
 @Component({
   selector: 'nid-open-layers-core',
@@ -11,7 +13,7 @@ import {Layer} from 'ol/layer';
   imports: [],
   templateUrl: './ngx-open-layers-core.component.html',
   styleUrl: './ngx-open-layers-core.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements INgxMapCore<Map>, OnInit {
   cursorInMap: boolean = false;
@@ -19,7 +21,7 @@ export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements
   @ViewChild('olMap', {static: true}) olMapElement!: ElementRef<HTMLDivElement>;
 
   constructor() {
-    super()
+    super();
     console.log('\x1B[46;30m Core');
   }
 
@@ -37,12 +39,17 @@ export class NgxOpenLayersCoreComponent extends NgxMapCoreCommon<Map> implements
     };
     this.mapCore = new Map({
       target: this.olMapElement.nativeElement,
-      view: new View(viewOptions)
-    })
+      view: new View(viewOptions),
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+    });
   }
 
   override insertLayer(layer: Layer) {
-    this.mapCore.addLayer(layer)
+    this.mapCore.addLayer(layer);
   }
 }
 
