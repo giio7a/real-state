@@ -7,11 +7,22 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CardModule} from 'primeng/card';
 import {ButtonDirective} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
+import {NGX_OPEN_LAYERS_CORE_DIRECTIVES} from '@nidiro/ngx-map-core';
 
 @Component({
   selector: 'srp-report',
   standalone: true,
-  imports: [CommonModule, FloatLabelModule, InputTextModule, InputTextareaModule, DropdownModule, CardModule, ButtonDirective, Ripple],
+  imports: [
+    CommonModule,
+    FloatLabelModule,
+    InputTextModule,
+    InputTextareaModule,
+    DropdownModule,
+    CardModule,
+    ButtonDirective,
+    Ripple,
+    NGX_OPEN_LAYERS_CORE_DIRECTIVES,
+  ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })

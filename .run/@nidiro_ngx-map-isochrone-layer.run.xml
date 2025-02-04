@@ -3,9 +3,8 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="ng" />
+      <script value="watch-isochrone-layer" />
     </scripts>
-    <arguments value="build @nidiro/ngx-map-isochrone-layer -- --watch" />
     <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.18.0/bin/node" />
     <envs />
     <method v="2" />

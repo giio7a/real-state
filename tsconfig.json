@@ -2,8 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@nidiro/ngx-map-core": ["./dist/@nidiro/ngx-map-core"],
-      "@nidiro/ngx-map-isochrone-layer": ["./dist/@nidiro/ngx-map-isochrone-layer"],
+      "@nidiro/ngx-map-core": ["./dist/@nidiro/ngx-map-core/src/public-api.ts"],
+      "@nidiro/ngx-map-isochrone-layer": ["./dist/@nidiro/ngx-map-isochrone-layer/src/public-api.ts"],
       "@nidiro/ngx-map-weather-layer": ["./dist/@nidiro/ngx-map-weather-layer"]
     },
     "outDir": "./dist/out-tsc",

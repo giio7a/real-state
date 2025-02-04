@@ -20,7 +20,7 @@
       },
       "defaultConfiguration": "production",
       "outputs": [
-        "{workspaceRoot}/dist/@nidiro/ngx-map-weather-layer"
+        "{workspaceRoot}/dist/@nidiro/ngx-map-weather-layer/src/public-api.ts"
       ]
     },
     "test": {

@@ -3,9 +3,8 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="ng" />
+      <script value="watch-map-core" />
     </scripts>
-    <arguments value="build @nidiro/ngx-map-core -- --watch" />
     <node-interpreter value="$USER_HOME$/.nvm/versions/node/v18.18.0/bin/node" />
     <envs />
     <method v="2" />
