@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {PrimeNGConfig} from 'primeng/api';
 
@@ -8,6 +8,7 @@ import {PrimeNGConfig} from 'primeng/api';
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   title = 'siena-report-public';
