@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FloatLabelModule} from 'primeng/floatlabel';
 import {InputTextModule} from 'primeng/inputtext';
@@ -7,7 +7,15 @@ import {DropdownModule} from 'primeng/dropdown';
 import {CardModule} from 'primeng/card';
 import {ButtonDirective} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
+import {Map} from 'ol';
 import {NGX_OPEN_LAYERS_CORE_DIRECTIVES} from '@nidiro/ngx-map-core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MapLocationSelector} from '../../../../nidiro/ngx-map-core/src/lib/ngx-open-layers-core/map-location-selector';
+import {Coordinate} from 'ol/coordinate';
+import {ReportType} from '../models/report';
+import {ReportService} from '../api/report/report.service';
+import {take} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'srp-report',
@@ -22,12 +30,37 @@ import {NGX_OPEN_LAYERS_CORE_DIRECTIVES} from '@nidiro/ngx-map-core';
     ButtonDirective,
     Ripple,
     NGX_OPEN_LAYERS_CORE_DIRECTIVES,
+    ReactiveFormsModule,
+    MapLocationSelector,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportComponent {
-  private localOffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-  today = new Date(Date.now() - this.localOffset).toISOString().slice(0, 16);
+  reportTypes: {label: string; value: ReportType}[] = [
+    {label: 'Bache', value: 'Bache'},
+    {label: 'Problema de agua potable', value: 'Problema_de_agua'},
+    {label: 'Luminaria', value: 'Luminaria'},
+    {label: 'Otro', value: 'Otro'},
+  ];
+  map!: Map;
+
+  extent = environment.definedExtents.tlaxcalancingo;
+  reportForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    type: new FormControl<ReportType>('Bache', Validators.required),
+    location: new FormControl<{lat: number; lng: number} | undefined>(undefined, Validators.required),
+  });
+
+  private reportService = inject(ReportService);
+
+  onSelectedLocationChanged(location: Coordinate) {
+    this.reportForm.patchValue({location: {lat: location[1], lng: location[0]}});
+  }
+
+  onSubmit() {
+    this.reportService.createReport(this.reportForm.getRawValue()).pipe(take(1)).subscribe();
+  }
 }
