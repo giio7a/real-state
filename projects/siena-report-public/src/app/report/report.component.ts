@@ -46,7 +46,7 @@ export class ReportComponent {
   ];
   map!: Map;
 
-  extent = environment.definedExtents.tlaxcalancingo;
+  extent = environment.definedExtents['tlaxcalancingo'];
   reportForm = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
