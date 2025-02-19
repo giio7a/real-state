@@ -4,6 +4,8 @@ import {CardModule} from 'primeng/card';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonDirective} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
+import {Store} from '@ngrx/store';
+import {GlobalActions} from '../store/global.actions';
 
 @Component({
   selector: 'sri-login',
@@ -14,10 +16,12 @@ import {FormsModule} from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  email: string = 'admin@nidiro.mx'; // TODO Enrique: clear
-  password: string = 'admin '; // TODO Enrique: clear
+  email: string = '';
+  password: string = '';
+
+  constructor(private store: Store) {}
 
   submitLogIn() {
-    console.log('\x1B[46;30m ', 'submitLogIn', '\x1B[0m', this.email, this.password);
+    this.store.dispatch(GlobalActions.submitLogIn({email: this.email, password: this.password}));
   }
 }
