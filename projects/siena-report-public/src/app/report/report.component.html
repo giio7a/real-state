@@ -1,41 +1,38 @@
 <div class="m-4 grid grid-cols-1 md:grid-cols-12">
   <p-card class="md:col-span-6 md:col-start-4" header="Reporte ciudadano">
-    <!-- TODO: Add reactive form -->
-    <form>
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
       <div class="mb-8">
         <p-floatLabel>
-          <input pInputText id="title" class="w-full" />
-          <label for="title">Título</label>
+          <input pInputText id="title" class="w-full" formControlName="title" />
+          <label for="title">Título*</label>
         </p-floatLabel>
       </div>
       <div class="mb-8">
         <p-floatLabel>
-          <textarea pInputTextarea id="description" class="w-full" rows="5" cols="30" [autoResize]="true"> </textarea>
-          <label for="description">Description</label>
+          <p-dropdown id="type" class="w-full" formControlName="type" optionLabel="label" optionValue="value" [options]="reportTypes" />
+          <label for="type">Tipo de reporte*</label>
         </p-floatLabel>
       </div>
-      <div class="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div class="mb-5 md:mb-0">
-          <p-floatLabel>
-            <!-- TODO: Move and check options -->
-            <p-dropdown id="type" class="w-full" [options]="['Bache', 'Luminaria', 'Otro']" />
-            <label for="type">Tipo de reporte</label>
-          </p-floatLabel>
-        </div>
-        <div class="mb-5 md:mb-0">
-          <p-floatLabel>
-            <input pInputTextarea id="date" class="w-full" type="datetime-local" [value]="today" />
-            <label for="date">Fecha del suceso:</label>
-          </p-floatLabel>
-        </div>
+      <div class="mb-8">
+        <p-floatLabel>
+          <textarea pInputTextarea id="description" class="w-full" rows="5" cols="30" formControlName="description" [autoResize]="true">
+          </textarea>
+          <label for="description">Descripción*</label>
+        </p-floatLabel>
       </div>
-      <!-- TODO: Add map -->
-      <div class="w-full h-72 bg-gray-200">
-        <nid-open-layers-core #olMap id="olMap"></nid-open-layers-core>
+      <div>
+        <small id="map-help">Da click en el mapa para marcar la ubicación relacionada al reporte*: </small>
+        <div class="w-full h-[25rem] bg-gray-200">
+          <nid-open-layers-core #olMap id="olMap" [extentToShow]="extent" (mapLoaded)="map = $event"></nid-open-layers-core>
+          @if (map) {
+            <ng-container [map]="map" (selectedLocationChange)="onSelectedLocationChanged($event)" nidMapLocationSelector></ng-container>
+          }
+        </div>
       </div>
       <div class="flex flex-row-reverse">
-        <!-- TODO: Save data -->
-        <button pButton pRipple type="submit" class="p-button-success mt-5">Enviar</button>
+        <div [ngClass]="{'cursor-not-allowed': reportForm.invalid}">
+          <button pButton pRipple type="submit" class="p-button-success mt-5" [disabled]="reportForm.invalid">Enviar</button>
+        </div>
       </div>
     </form>
   </p-card>

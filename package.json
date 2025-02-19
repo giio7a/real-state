@@ -13,7 +13,7 @@
     "watch-weather-layer": "nx run ngx-map-weather-layer:build --watch",
     "prepare": "rm -rf ./.husky && husky install && echo \"npm run precommit\" > .husky/pre-commit",
     "precommit": "lint-staged",
-    "start-srp": "nx serve siena-report-public --port=4201",
+    "start-srp": "nx serve siena-report-public --port=4200",
     "start-sri": "nx serve siena-report-internal --port=4202"
   },
   "private": true,
