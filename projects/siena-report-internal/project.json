@@ -8,16 +8,27 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/projects/siena-report-internal",
         "index": "projects/siena-report-internal/src/index.html",
         "browser": "projects/siena-report-internal/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "projects/siena-report-internal/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["projects/siena-report-internal/src/favicon.ico", "projects/siena-report-internal/src/assets"],
-        "styles": ["projects/siena-report-internal/src/styles.scss"],
+        "assets": [
+          "projects/siena-report-internal/src/favicon.ico",
+          "projects/siena-report-internal/src/assets"
+        ],
+        "styles": [
+          "primeng/resources/themes/bootstrap4-light-blue/theme.css",
+          "node_modules/primeng/resources/primeng.min.css",
+          "projects/siena-report-internal/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -46,6 +57,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "projects/siena-report-internal/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "siena-report-internal:build:production"

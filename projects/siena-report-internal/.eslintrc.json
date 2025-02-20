@@ -26,7 +26,9 @@
     },
     {
       "files": ["*.html"],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/elements-content": "off"
+      }
     }
   ]
 }
