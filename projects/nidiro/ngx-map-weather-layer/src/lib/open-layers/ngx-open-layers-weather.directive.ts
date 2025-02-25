@@ -1,8 +1,8 @@
 import {Directive, Inject, OnInit} from '@angular/core';
 import {Layer} from 'ol/layer';
 import {toLonLat} from 'ol/proj';
-import {Map} from 'ol'
-import {Deck, MapView} from '@deck.gl/core/typed';
+import {Map} from 'ol';
+import {Deck, MapView} from '@deck.gl/core';
 import {BASEMAP_RASTER_STYLE_URL} from './basemap';
 import {XYZ} from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
@@ -40,18 +40,16 @@ export class NgxOpenLayersWeatherDirective extends BaseWeatherLayer<Map> impleme
      * see https://github.com/visgl/deck.gl/blob/8.9-release/examples/get-started/pure-js/openlayers/app.js
      * updated to support picking
      */
-      // TODO Enrique: CONFIRM - Using new div?
+    // TODO Enrique: CONFIRM - Using new div?
     const element = document.createElement('div');
     element.style.pointerEvents = 'none';
 
     // Because it is the OpenLayers implementation, we are going to create its own instance of Deck.gl.
     this.deckInstance = new Deck({
       parent: element,
-      initialViewState: {longitude: 0, latitude: 0, zoom: 1}, // This is not meaningful since the render function would immediately set something else
+      // initialViewState: {longitude: 0, latitude: 0, zoom: 1}, // This is not meaningful since the render function would immediately set something else
       controller: false,
-      views: [
-        new MapView({repeat: true}),
-      ],
+      views: [new MapView({repeat: true})],
       layers: [],
     });
     this.initLayer();
@@ -62,43 +60,45 @@ export class NgxOpenLayersWeatherDirective extends BaseWeatherLayer<Map> impleme
 
     const element = this.deckInstance.props.parent;
     this.ngxMapCore.mapCore.addControl(new Control({element}));
-    this.ngxMapCore.insertLayer(new Layer({
-      render: ({size, viewState}) => {
-        const [width, height] = size;
-        const [longitude, latitude] = toLonLat(viewState.center);
-        const zoom = viewState.zoom - 1;
-        const bearing = (-viewState.rotation * 180) / Math.PI;
-        const deckViewState = {bearing, longitude, latitude, zoom};
-        this.deckInstance.setProps({width, height, viewState: deckViewState});
-        this.deckInstance.redraw();
-        return element;
-      }
-    }));
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerdown', event => {
+    this.ngxMapCore.insertLayer(
+      new Layer({
+        render: ({size, viewState}) => {
+          const [width, height] = size;
+          const [longitude, latitude] = toLonLat(viewState.center);
+          const zoom = viewState.zoom - 1;
+          const bearing = (-viewState.rotation * 180) / Math.PI;
+          const deckViewState = {bearing, longitude, latitude, zoom};
+          this.deckInstance.setProps({width, height, viewState: {deckViewState}});
+          this.deckInstance.redraw();
+          return element;
+        },
+      }),
+    );
+    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerdown', (event) => {
       this.deckInstance._onPointerDown({
         // @ts-ignore
         type: event.type,
         srcEvent: event,
         offsetCenter: {x: event.offsetX / window.devicePixelRatio, y: event.offsetY / window.devicePixelRatio},
         leftButton: event.buttons === 1,
-        rightButton: event.buttons === 2
+        rightButton: event.buttons === 2,
       });
     });
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointermove', event => {
+    this.ngxMapCore.mapCore.getViewport().addEventListener('pointermove', (event) => {
       this.deckInstance._onPointerMove({
         // @ts-ignore
         type: event.type,
         srcEvent: event,
         offsetCenter: {x: event.offsetX / window.devicePixelRatio, y: event.offsetY / window.devicePixelRatio},
         leftButton: event.buttons === 1,
-        rightButton: event.buttons === 2
+        rightButton: event.buttons === 2,
       });
     });
-    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerleave', event => {
+    this.ngxMapCore.mapCore.getViewport().addEventListener('pointerleave', (event) => {
       this.deckInstance._onPointerMove({
         // @ts-ignore
         type: event.type,
-        srcEvent: event
+        srcEvent: event,
       });
     });
     return this.refreshLayer();

@@ -4,7 +4,7 @@
     "paths": {
       "@nidiro/ngx-map-core": ["./dist/@nidiro/ngx-map-core/src/public-api.ts"],
       "@nidiro/ngx-map-isochrone-layer": ["./dist/@nidiro/ngx-map-isochrone-layer/src/public-api.ts"],
-      "@nidiro/ngx-map-weather-layer": ["./dist/@nidiro/ngx-map-weather-layer"]
+      "@nidiro/ngx-map-weather-layer": ["./dist/@nidiro/ngx-map-weather-layer/src/public-api.ts"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,

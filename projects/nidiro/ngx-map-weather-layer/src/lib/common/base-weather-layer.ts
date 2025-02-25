@@ -5,7 +5,7 @@ import {
   HIGH_LOW_LAYER_DATASET_CONFIG,
   PARTICLE_LAYER_DATASET_CONFIG,
   TOOLTIP_CONTROL_DATASET_CONFIG,
-  WEATHER_LAYERS_UTIL
+  WEATHER_LAYERS_UTIL,
 } from './weatherlayers-gl.config';
 import {NgxMapLayer} from '@nidiro/ngx-map-core';
 import {
@@ -30,13 +30,12 @@ import {
   Placement,
   RasterLayer,
   TooltipControl,
-  UnitSystem
+  UnitSystem,
 } from 'weatherlayers-gl';
 import {Client} from 'weatherlayers-gl/client';
 import {WeatherLayersConfigToken} from './injection-token';
-import {ClipExtension} from '@deck.gl/extensions/typed';
-import {Deck} from '@deck.gl/core/typed';
-
+import {ClipExtension} from '@deck.gl/extensions';
+import {Deck, MapView} from '@deck.gl/core';
 
 @Directive()
 export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<MapImplementation> {
@@ -52,7 +51,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
   }
 
   private _dataset: string = WEATHER_LAYERS_UTIL.DEFAULT_DATASET;
-  protected deckInstance: Deck;
+  protected deckInstance: Deck<MapView[]>;
   private readonly weatherLayersClient: Client;
   private tooltipControl: TooltipControl;
 
@@ -63,22 +62,21 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
     if (!config.dataset || !this.weatherLayersClient) {
       return;
     }
-    const {
-      title,
-      unitFormat,
-      attribution,
-      palette
-    } = await this.weatherLayersClient.loadDataset(config.dataset, {unitSystem: config.unitSystem});
+    const {title, unitFormat, attribution, palette} = await this.weatherLayersClient.loadDataset(config.dataset, {
+      unitSystem: config.unitSystem,
+    });
     const {datetimes} = await this.weatherLayersClient.loadDatasetSlice(config.dataset, config.datetimeRange);
-    const datetime = config.datetime !== WEATHER_LAYERS_UTIL.NO_DATA && datetimes[0] <= config.datetime && config.datetime <= datetimes[datetimes.length - 1] ? config.datetime : datetimes[0];
-    const {
-      image,
-      image2,
-      imageWeight,
-      imageType,
-      imageUnscale,
-      bounds
-    } = await this.weatherLayersClient.loadDatasetData(config.dataset, datetime, {datetimeInterpolate: config.datetimeInterpolate});
+    const datetime =
+      config.datetime !== WEATHER_LAYERS_UTIL.NO_DATA &&
+      datetimes[0] <= config.datetime &&
+      config.datetime <= datetimes[datetimes.length - 1]
+        ? config.datetime
+        : datetimes[0];
+    const {image, image2, imageWeight, imageType, imageUnscale, bounds} = await this.weatherLayersClient.loadDatasetData(
+      config.dataset,
+      datetime,
+      {datetimeInterpolate: config.datetimeInterpolate},
+    );
 
     // TODO Enrique: Avoided?
     // (config as any).datetimes = datetimes;
@@ -128,7 +126,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
       opacity: config.contour.opacity,
       extensions: [new ClipExtension()],
       clipBounds: [-181, -85.051129, 181, 85.051129],
-    })
+    });
     const highLow = new HighLowLayer({
       id: 'highLow',
       // data properties
@@ -180,7 +178,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
       iconColor: WEATHER_LAYERS_UTIL.cssToColor(config.grid?.iconColor) as any,
       palette: config.grid?.palette ? palette : null,
       opacity: config.grid?.opacity,
-    })
+    });
     const particle = new ParticleLayer({
       id: 'particle',
       // data properties
@@ -207,7 +205,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
       extensions: [new ClipExtension()],
       clipBounds: [-181, -85.051129, 181, 85.051129],
       getPolygonOffset: () => [0, -1000],
-    })
+    });
     this.deckInstance.setProps({
       layers: [raster, contour, highLow, grid, particle],
     });
@@ -222,7 +220,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
       followCursorPlacement: config.tooltip.followCursorPlacement,
     });
     // attributionControl.updateConfig({attribution});
-  }
+  };
 
   get config() {
     return {
@@ -237,7 +235,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
       imageMaxValue: 0, // dataset-specific
       raster: {
         enabled: true, // TODO Enrique: Couldn't find when it's disabled
-        opacity: 0.2
+        opacity: 0.2,
       },
       contour: {
         enabled: !!CONTOUR_LAYER_DATASET_CONFIG[this._dataset],
@@ -265,7 +263,8 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
         palette: false,
         opacity: 0.2,
       },
-      grid: { // TODO Enrique: if deckgl
+      grid: {
+        // TODO Enrique: if deckgl
         enabled: !!GRID_LAYER_DATASET_CONFIG[this._dataset],
         style: GRID_LAYER_DATASET_CONFIG[this._dataset]?.style || GridStyle.VALUE, // dataset-specific
         density: 0,
@@ -280,7 +279,8 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
         palette: false,
         opacity: 0.2,
       },
-      particle: { // TODO Enrique: if webgl2
+      particle: {
+        // TODO Enrique: if webgl2
         enabled: !!PARTICLE_LAYER_DATASET_CONFIG[this._dataset],
         numParticles: 5000,
         maxAge: 10,
@@ -297,7 +297,7 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
         followCursorOffset: 16,
         followCursorPlacement: Placement.BOTTOM,
       },
-    }
+    };
   }
 
   constructor(protected weatherLayerConfig: WeatherLayersConfigToken) {
@@ -318,10 +318,9 @@ export abstract class BaseWeatherLayer<MapImplementation> extends NgxMapLayer<Ma
     // tooltip
     this.tooltipControl = new TooltipControl({
       followCursor: true,
-      unitFormat: {unit: 'm', system: UnitSystem.METRIC}
+      unitFormat: {unit: 'm'},
     });
     this.tooltipControl.addTo(this.deckInstance.getCanvas()!.parentElement!);
-    this.deckInstance.setProps({onHover: event => this.tooltipControl.updatePickingInfo(event)});
+    this.deckInstance.setProps({onHover: (event) => this.tooltipControl.updatePickingInfo(event)});
   }
-
 }
