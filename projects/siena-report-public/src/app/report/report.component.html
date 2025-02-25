@@ -1,7 +1,7 @@
 <div class="m-4 grid grid-cols-1 md:grid-cols-12">
   <p-card class="md:col-span-6 md:col-start-4" header="Reporte ciudadano">
     <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-      <div class="mb-8">
+      <div class="mb-8 mt-6">
         <p-floatlabel>
           <input pInputText id="title" class="w-full" formControlName="title" />
           <label for="title">Título*</label>
@@ -9,7 +9,7 @@
       </div>
       <div class="mb-8">
         <p-floatlabel>
-          <p-dropdown id="type" class="w-full" formControlName="type" optionLabel="label" optionValue="value" [options]="reportTypes" />
+          <p-select id="type" class="w-full" formControlName="type" optionLabel="label" optionValue="value" [options]="reportTypes" />
           <label for="type">Tipo de reporte*</label>
         </p-floatlabel>
       </div>

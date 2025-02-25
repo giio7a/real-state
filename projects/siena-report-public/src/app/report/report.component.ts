@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputTextModule} from 'primeng/inputtext';
 import {TextareaModule} from 'primeng/textarea';
-import {DropdownModule} from 'primeng/dropdown';
+import {Select} from 'primeng/select';
 import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
@@ -24,13 +24,14 @@ import {environment} from '../../environments/environment';
     FloatLabel,
     InputTextModule,
     TextareaModule,
-    DropdownModule,
+    Select,
     CardModule,
     ButtonModule,
     Ripple,
     NGX_OPEN_LAYERS_CORE_DIRECTIVES,
     ReactiveFormsModule,
     MapLocationSelector,
+    Select,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
