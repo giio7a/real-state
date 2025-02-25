@@ -2,12 +2,12 @@ import {Directive, Inject, OnInit} from '@angular/core';
 import {BaseWeatherLayer} from '../common/base-weather-layer';
 import {IControl, Map} from 'maplibre-gl';
 import {NGX_WEATHER_LAYER_CONFIG, WeatherLayersConfigToken} from '../common/injection-token';
-import {Deck} from '@deck.gl/core/typed';
-import {MapboxOverlay} from '@deck.gl/mapbox/typed';
+import {Deck} from '@deck.gl/core';
+import {MapboxOverlay} from '@deck.gl/mapbox';
 
 @Directive({
   selector: '[nidMapLibreWeatherLayer]',
-  standalone: true
+  standalone: true,
 })
 export class NgxMapLibreWeatherLayerDirective extends BaseWeatherLayer<Map> implements OnInit {
   override getLayerId(): string {

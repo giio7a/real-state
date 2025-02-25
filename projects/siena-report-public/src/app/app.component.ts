@@ -1,6 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {PrimeNGConfig} from 'primeng/api';
 
 @Component({
   selector: 'srp-root',
@@ -10,11 +9,6 @@ import {PrimeNGConfig} from 'primeng/api';
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'siena-report-public';
-  constructor(private primengConfig: PrimeNGConfig) {}
-
-  ngOnInit() {
-    this.primengConfig.ripple = true;
-  }
 }

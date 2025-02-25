@@ -1,16 +1,15 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FloatLabelModule} from 'primeng/floatlabel';
+import {FloatLabel} from 'primeng/floatlabel';
 import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {DropdownModule} from 'primeng/dropdown';
+import {TextareaModule} from 'primeng/textarea';
+import {Select} from 'primeng/select';
 import {CardModule} from 'primeng/card';
-import {ButtonDirective} from 'primeng/button';
+import {ButtonModule} from 'primeng/button';
 import {Ripple} from 'primeng/ripple';
 import {Map} from 'ol';
-import {NGX_OPEN_LAYERS_CORE_DIRECTIVES} from '@nidiro/ngx-map-core';
+import {MapLocationSelector, NGX_OPEN_LAYERS_CORE_DIRECTIVES} from '@nidiro/ngx-map-core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MapLocationSelector} from '../../../../nidiro/ngx-map-core/src/lib/ngx-open-layers-core/map-location-selector';
 import {Coordinate} from 'ol/coordinate';
 import {ReportType} from '../models/report';
 import {ReportService} from '../api/report/report.service';
@@ -22,16 +21,17 @@ import {environment} from '../../environments/environment';
   standalone: true,
   imports: [
     CommonModule,
-    FloatLabelModule,
+    FloatLabel,
     InputTextModule,
-    InputTextareaModule,
-    DropdownModule,
+    TextareaModule,
+    Select,
     CardModule,
-    ButtonDirective,
+    ButtonModule,
     Ripple,
     NGX_OPEN_LAYERS_CORE_DIRECTIVES,
     ReactiveFormsModule,
     MapLocationSelector,
+    Select,
   ],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',

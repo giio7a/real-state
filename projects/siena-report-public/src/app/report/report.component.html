@@ -1,24 +1,24 @@
 <div class="m-4 grid grid-cols-1 md:grid-cols-12">
   <p-card class="md:col-span-6 md:col-start-4" header="Reporte ciudadano">
     <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
-      <div class="mb-8">
-        <p-floatLabel>
+      <div class="mb-8 mt-6">
+        <p-floatlabel>
           <input pInputText id="title" class="w-full" formControlName="title" />
           <label for="title">Título*</label>
-        </p-floatLabel>
+        </p-floatlabel>
       </div>
       <div class="mb-8">
-        <p-floatLabel>
-          <p-dropdown id="type" class="w-full" formControlName="type" optionLabel="label" optionValue="value" [options]="reportTypes" />
+        <p-floatlabel>
+          <p-select id="type" class="w-full" formControlName="type" optionLabel="label" optionValue="value" [options]="reportTypes" />
           <label for="type">Tipo de reporte*</label>
-        </p-floatLabel>
+        </p-floatlabel>
       </div>
       <div class="mb-8">
-        <p-floatLabel>
-          <textarea pInputTextarea id="description" class="w-full" rows="5" cols="30" formControlName="description" [autoResize]="true">
+        <p-floatlabel>
+          <textarea pTextarea id="description" class="w-full" rows="5" cols="30" formControlName="description" [autoResize]="true">
           </textarea>
           <label for="description">Descripción*</label>
-        </p-floatLabel>
+        </p-floatlabel>
       </div>
       <div>
         <small id="map-help">Da click en el mapa para marcar la ubicación relacionada al reporte*: </small>
@@ -29,9 +29,9 @@
           }
         </div>
       </div>
-      <div class="flex flex-row-reverse">
+      <div class="flex flex-row-reverse mt-3">
         <div [ngClass]="{'cursor-not-allowed': reportForm.invalid}">
-          <button pButton pRipple type="submit" class="p-button-success mt-5" [disabled]="reportForm.invalid">Enviar</button>
+          <p-button pRipple type="submit" severity="success" label="Enviar" [disabled]="reportForm.invalid" />
         </div>
       </div>
     </form>

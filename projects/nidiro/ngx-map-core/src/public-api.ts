@@ -9,6 +9,7 @@ export * from './lib/architecture/di-tokens';
 
 export {NgxOpenLayersCoreComponent} from './lib/ngx-open-layers-core/ngx-open-layers-core.component';
 export {NgxMapLibreCoreComponent} from './lib/ngx-maplibre-core/ngx-maplibre-core.component';
+export {MapLocationSelector} from './lib/ngx-open-layers-core/map-location-selector';
 
 export {InitialPosition} from './lib/architecture/ngx-map-core';
 

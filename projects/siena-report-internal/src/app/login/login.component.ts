@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CardModule} from 'primeng/card';
 import {InputTextModule} from 'primeng/inputtext';
-import {ButtonDirective} from 'primeng/button';
+import {Button} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {GlobalActions} from '../store/global.actions';
@@ -10,7 +10,7 @@ import {GlobalActions} from '../store/global.actions';
 @Component({
   selector: 'sri-login',
   standalone: true,
-  imports: [CommonModule, CardModule, InputTextModule, ButtonDirective, FormsModule],
+  imports: [CommonModule, CardModule, InputTextModule, FormsModule, Button],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
