@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {NavbarComponent} from './navbar/navbar.component';
 
 @Component({
   selector: 'sri-auth-wrapper',
-  imports: [CommonModule],
+  imports: [NavbarComponent],
+  standalone: true,
   templateUrl: './auth-wrapper.component.html',
   styleUrl: './auth-wrapper.component.scss',
 })
-export class AuthWrapperComponent {}
+export class AuthWrapperComponent {
+  selectedSampleAppsSidebarNav: string;
+}

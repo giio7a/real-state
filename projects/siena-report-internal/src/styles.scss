@@ -2,4 +2,6 @@
 //@tailwind base; // This causes style conflicts with primeng
 //@tailwind components;
 //@tailwind utilities;
+@use 'primeicons/primeicons.css';
+
 @use 'tailwindcss';
