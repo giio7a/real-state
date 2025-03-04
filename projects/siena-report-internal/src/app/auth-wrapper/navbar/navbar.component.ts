@@ -6,7 +6,6 @@ import {NgClass} from '@angular/common';
 import {RouterLink} from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'sri-navbar',
   templateUrl: './navbar.component.html',
   imports: [Tooltip, Divider, Avatar, NgClass, RouterLink],

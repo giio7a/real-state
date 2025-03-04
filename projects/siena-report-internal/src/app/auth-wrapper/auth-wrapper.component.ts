@@ -5,7 +5,6 @@ import {RouterOutlet} from '@angular/router';
 @Component({
   selector: 'sri-auth-wrapper',
   imports: [NavbarComponent, RouterOutlet],
-  standalone: true,
   templateUrl: './auth-wrapper.component.html',
   styleUrl: './auth-wrapper.component.scss',
 })

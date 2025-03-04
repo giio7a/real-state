@@ -12,7 +12,7 @@ enum MapScene {
 
 @Component({
   selector: 'sin-home',
-  standalone: true,
+  standalone: false,
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
