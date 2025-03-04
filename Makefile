@@ -1,5 +1,5 @@
 build-all:
-	npm run ng build -- --project=@nidiro/ngx-map-core
-	npm run ng build -- --project=@nidiro/ngx-map-isochrone-layer
-	npm run ng build -- --project=@nidiro/ngx-map-weather-layer
-	npm run ng build -- --project=siena --configuration=production
+	nx build @nidiro/ngx-map-core
+	nx build @nidiro/ngx-map-isochrone-layer
+	nx build @nidiro/ngx-map-weather-layer
+	nx build siena --configuration=production

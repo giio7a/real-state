@@ -9,7 +9,6 @@ import {GlobalActions} from '../store/global.actions';
 
 @Component({
   selector: 'sri-login',
-  standalone: true,
   imports: [CommonModule, CardModule, InputTextModule, FormsModule, Button],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
