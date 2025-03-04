@@ -1,9 +1,7 @@
 <section class="flex flex-col items-center">
-  <div class="w-full h-[100vh] flex items-start gap-6 overflow-hidden">
+  <div class="w-full h-full flex items-start gap-6 overflow-hidden">
     <sri-navbar />
-    @if (selectedSampleAppsSidebarNav) {
-      <div>{{ selectedSampleAppsSidebarNav }}</div>
-    }
+
     <router-outlet></router-outlet>
   </div>
 </section>

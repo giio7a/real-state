@@ -9,6 +9,4 @@ import {RouterOutlet} from '@angular/router';
   templateUrl: './auth-wrapper.component.html',
   styleUrl: './auth-wrapper.component.scss',
 })
-export class AuthWrapperComponent {
-  selectedSampleAppsSidebarNav: string;
-}
+export class AuthWrapperComponent {}

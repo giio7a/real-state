@@ -13,7 +13,8 @@ import {RouterLink} from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  selectedSampleAppsSidebarNav: string;
+  selectedItem: string; // TODO Enrique: The active route is not marked in the navbar yet.
+
   sidebarNavItems: {icon: string; title: string; route: string}[] = [
     {icon: 'pi pi-home', title: 'Overview', route: '/a/home'},
     {icon: 'pi pi-comment', title: 'Chat', route: '/a/settings'},
@@ -22,12 +23,10 @@ export class NavbarComponent {
     {icon: 'pi pi-user', title: 'Customers', route: '/a/home'},
     {icon: 'pi pi-video', title: 'Movies', route: '/a/home'},
   ];
+
+  // TODO Enrique: These are not doing anything yet.
   sampleAppsSidebarNavsMore = [{icon: 'pi pi-cog', title: 'Settings'}];
   dashboardSidebarVisible: boolean = false;
-
-  setSelectedSampleAppsSidebarNav(title: string) {
-    console.log('\x1B[46;30m ', title, '\x1B[0m');
-  }
 
   constructor() {}
 }
