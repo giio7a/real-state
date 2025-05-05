@@ -1,0 +1,9 @@
+// projects/real-estate/api/.sequelizerc
+const { resolve } = require('path');
+
+module.exports = {
+  'config':          resolve(__dirname, 'src/app/config/database.js'),
+  'models-path':     resolve(__dirname, 'src/app/models'),
+  'migrations-path': resolve(__dirname, 'src/app/db/migrations'),
+  'seeders-path':    resolve(__dirname, 'src/app/db/seeders'),
+};
