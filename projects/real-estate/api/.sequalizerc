@@ -1,0 +1,9 @@
+//archivo de configuración para sequelize
+const path = require('path');
+
+module.exports = {
+  'config': path.resolve('src/app/config', 'database.js'), //ruta de configuración de la base de datos
+  'models-path': path.resolve('src/app/models'), //ruta de los modelos
+  'seeders-path': path.resolve('src/app/db/seeders'), //ruta de los seeders
+  'migrations-path': path.resolve('src/app/db/migrations') //ruta de las migraciones
+};

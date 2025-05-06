@@ -1,0 +1,84 @@
+{
+  "name": "api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "projects/real-estate/api/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/projects/real-estate/api",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "projects/real-estate/api/src/main.ts",
+        "tsConfig": "projects/real-estate/api/tsconfig.app.json",
+        "assets": ["projects/real-estate/api/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "api:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api:build:development"
+        },
+        "production": {
+          "buildTarget": "api:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx sequelize-cli db:migrate",
+        "cwd": "projects/real-estate/api"
+      }
+    },
+    "migrate:undo": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx sequelize-cli db:migrate:undo",
+        "cwd": "projects/real-estate/api"
+      }
+    },
+    "seed": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx sequelize-cli db:seed:all",
+        "cwd": "projects/real-estate/api"
+      }
+    }
+  }
+}
