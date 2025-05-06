@@ -11,7 +11,7 @@
     "watch-map-core": "nx run ngx-map-core:build --watch",
     "watch-isochrone-layer": "nx run ngx-map-isochrone-layer:build --watch",
     "watch-weather-layer": "nx run ngx-map-weather-layer:build --watch",
-    "prepare": "rm -rf ./.husky && husky && echo \"npm run precommit\" > .husky/pre-commit",
+    "prepare": "husky",
     "precommit": "lint-staged",
     "start-srp": "nx serve siena-report-public --port=4200",
     "start-sri": "nx serve siena-report-internal --port=4202",
